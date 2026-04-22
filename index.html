@@ -111,20 +111,24 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 
 /* FORMACIÓN */
 #form{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s;padding-bottom:0}
-.edu-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:56px}
+#form .sec-title{margin-bottom:28px}
+.form-sublabel{padding:24px 52px;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:16px;border-top:1px solid var(--border)}
+.form-sublabel::after{content:'';flex:1;height:1px;background:var(--border)}
+@media(max-width:700px){.form-sublabel{padding:18px 24px}}
+.edu-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:none;margin-top:0}
 @media(max-width:900px){.edu-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.edu-grid{grid-template-columns:1fr}}
-.edu-card{padding:48px 40px;border-right:1px solid var(--border);position:relative;transition:background .3s}
+.edu-card{padding:40px;border-right:1px solid var(--border);border-top:1px solid var(--border);position:relative;transition:background .3s}
 .edu-card:last-child{border-right:none}
 .edu-card:hover{background:var(--bg)}
-.edu-card-num{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:var(--border);line-height:1;margin-bottom:32px;transition:color .3s}
+.edu-card-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:var(--border);line-height:1;margin-bottom:28px;transition:color .3s}
 .edu-card:hover .edu-card-num{color:var(--teal)}
 .edu-card-deg{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
 .edu-card-inst{font-size:1rem;color:var(--ink);margin-bottom:6px;font-weight:500}
 .edu-card-year{font-size:.75rem;color:var(--muted);font-style:italic}
-.diplo-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+.diplo-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:none}
 @media(max-width:760px){.diplo-strip{grid-template-columns:1fr}}
-.diplo-big{padding:48px 40px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:14px;transition:background .3s}
+.diplo-big{padding:40px;border-right:1px solid var(--border);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:14px;transition:background .3s}
 .diplo-big:last-child{border-right:none}
 .diplo-big:hover{background:var(--bg)}
 .diplo-big-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:var(--teal);opacity:.4;line-height:1}
@@ -139,7 +143,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .exp-viewport{flex:1;overflow:hidden;position:relative}
 .exp-track{display:flex;align-items:stretch;padding:0 52px;gap:0;width:max-content;height:100%}
 @media(max-width:700px){.exp-track{padding:0 24px}}
-.exp-card{width:clamp(260px,24vw,320px);flex-shrink:0;padding:0 32px 80px 0;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--border);transition:border-color .4s}
+.exp-card{width:clamp(260px,calc((100vw - 107px) / 3),440px);flex-shrink:0;padding:0 32px 80px 0;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--border);transition:border-color .4s}
 .exp-card:last-child{border-right:none;padding-right:52px}
 .exp-card:hover .exp-c-role{color:var(--teal)}
 .exp-c-date{font-size:.72rem;color:var(--teal);font-weight:600;letter-spacing:.06em;margin-bottom:16px;font-family:'Syne',sans-serif}
@@ -162,36 +166,36 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 /* SKILLS — diagrams */
 #skills{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s}
 .skills-sections{display:flex;flex-direction:column;gap:80px;align-items:center}
-.sk-group{width:100%;max-width:1000px}
-.sk-group-title{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:40px;display:flex;align-items:center;justify-content:center;gap:16px;transition:color .4s}
-.sk-group-title::before,.sk-group-title::after{content:'';width:40px;height:1px;background:var(--border)}
+.sk-group{width:100%;max-width:1100px}
+.sk-group-title{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);text-align:center;margin-bottom:48px;display:flex;align-items:center;justify-content:center;gap:16px;transition:color .4s}
+.sk-group-title::before,.sk-group-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* Circular rings */
-.rings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px 28px;justify-items:center}
+.rings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px 32px;justify-items:center}
 @media(max-width:700px){.rings-grid{grid-template-columns:repeat(2,1fr)}}
-.ring-item{display:flex;flex-direction:column;align-items:center;gap:12px}
-.ring-vis{position:relative;width:100px;height:100px}
+.ring-item{display:flex;flex-direction:column;align-items:center;gap:14px}
+.ring-vis{position:relative;width:140px;height:140px}
 .ring-vis svg{width:100%;height:100%}
 .ring-bg{fill:none;stroke:var(--border);stroke-width:5;transition:stroke .4s}
 .ring-fg{fill:none;stroke:var(--teal);stroke-width:5;stroke-linecap:round;stroke-dasharray:276.46;stroke-dashoffset:276.46;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke .3s}
-.ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--ink);transition:color .4s}
-.ring-name{font-size:.8rem;color:var(--mid);text-align:center;font-weight:400;transition:color .3s}
+.ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--ink);transition:color .4s}
+.ring-name{font-size:.85rem;color:var(--mid);text-align:center;font-weight:400;transition:color .3s}
 .ring-item:hover .ring-name{color:var(--ink)}
 
 /* Vertical bars */
-.vbars-outer{display:flex;align-items:flex-end;justify-content:center;gap:28px;height:200px;padding-bottom:48px;position:relative}
-.vbars-outer::after{content:'';position:absolute;bottom:48px;left:0;right:0;height:1px;background:var(--border)}
-.vbar-item{display:flex;flex-direction:column;align-items:center;width:80px;height:100%}
+.vbars-outer{display:flex;align-items:flex-end;justify-content:center;gap:36px;height:280px;padding-bottom:52px;position:relative}
+.vbars-outer::after{content:'';position:absolute;bottom:52px;left:0;right:0;height:1px;background:var(--border)}
+.vbar-item{display:flex;flex-direction:column;align-items:center;width:100px;height:100%}
 .vbar-track{width:100%;flex:1;background:var(--border);border-radius:6px 6px 0 0;position:relative;overflow:hidden;transition:background .4s}
 .vbar-fill{position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(to top,var(--teal),rgba(61,214,200,.4));border-radius:6px 6px 0 0;transition:background .3s}
 [data-theme="light"] .vbar-fill{background:linear-gradient(to top,var(--teal),rgba(45,106,106,.3))}
-.vbar-name{font-size:.72rem;color:var(--mid);text-align:center;margin-top:10px;font-weight:400;transition:color .3s}
-.vbar-pct{font-size:.68rem;color:var(--muted);font-weight:600;margin-top:3px;transition:color .4s}
+.vbar-name{font-size:.78rem;color:var(--mid);text-align:center;margin-top:12px;font-weight:400;transition:color .3s}
+.vbar-pct{font-size:.72rem;color:var(--teal);font-weight:600;margin-top:4px;transition:color .4s}
 .vbar-item:hover .vbar-name{color:var(--ink)}
 
 /* Radar chart */
-.radar-wrap{display:flex;flex-direction:column;align-items:center;gap:24px}
-.radar-svg{width:260px;height:260px}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;gap:28px}
+.radar-svg{width:320px;height:320px}
 .radar-grid-poly{fill:none;stroke:var(--border);stroke-width:1;transition:stroke .4s}
 .radar-axis{stroke:var(--border);stroke-width:1;transition:stroke .4s}
 .radar-fill{fill:var(--teal);fill-opacity:.18;stroke:var(--teal);stroke-width:2;stroke-linejoin:round}
@@ -356,6 +360,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
     <h2 class="sec-title">Educación &amp; Diplomados</h2>
   </div>
 
+  <div class="form-sublabel">Educación</div>
   <div class="edu-grid">
     <div class="edu-card">
       <div class="edu-card-num">01</div>
@@ -383,6 +388,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
     </div>
   </div>
 
+  <div class="form-sublabel">Diplomados</div>
   <div class="diplo-strip">
     <div class="diplo-big">
       <div class="diplo-big-num">01</div>
@@ -834,15 +840,6 @@ gsap.timeline({defaults:{ease:'power4.out'}})
   });
 })();
 
-/* ── SECTION REVEALS ── */
-gsap.utils.toArray('.sec-label,.sec-title').forEach(el=>{
-  gsap.from(el,{y:-18,autoAlpha:0,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
-});
-
-ScrollTrigger.batch('.sk-group',{start:'top 85%',
-  onEnter:b=>gsap.from(b,{y:32,autoAlpha:0,stagger:.1,duration:.65,ease:'power2.out'})});
-ScrollTrigger.batch('.curso-card',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{y:26,autoAlpha:0,scale:.97,stagger:.09,duration:.65,ease:'power2.out'})});
 
 /* ── CIRCULAR RINGS ── */
 const C=2*Math.PI*44; // r=44
@@ -979,10 +976,10 @@ gsap.utils.toArray('.sec-label').forEach(el=>{
     onEnter:()=>scramble(el)});
 });
 
-/* ── ENHANCED BLUR-IN REVEALS ── */
+/* ── SECTION TITLE REVEALS ── */
 gsap.utils.toArray('.sec-title').forEach(el=>{
-  gsap.from(el,{y:70,autoAlpha:0,filter:'blur(10px)',duration:1.1,ease:'power3.out',
-    scrollTrigger:{trigger:el,start:'top 88%'}});
+  gsap.from(el,{y:40,autoAlpha:0,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
 });
 
 gsap.utils.toArray('.sec-label').forEach(el=>{
@@ -995,11 +992,11 @@ ScrollTrigger.batch('.edu-card',{start:'top 88%',once:true,
 ScrollTrigger.batch('.diplo-big',{start:'top 88%',once:true,
   onEnter:b=>gsap.from(b,{y:30,autoAlpha:0,stagger:.12,duration:.65,ease:'power2.out'})});
 
-ScrollTrigger.batch('.sk-group',{start:'top 85%',
-  onEnter:b=>gsap.from(b,{y:60,autoAlpha:0,filter:'blur(8px)',stagger:.12,duration:.9,ease:'power3.out'})});
+ScrollTrigger.batch('.sk-group',{start:'top 85%',once:true,
+  onEnter:b=>gsap.from(b,{y:60,autoAlpha:0,stagger:.12,duration:.9,ease:'power3.out'})});
 
-ScrollTrigger.batch('.curso-card',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{y:50,autoAlpha:0,filter:'blur(6px)',scale:.96,stagger:.09,duration:.8,ease:'power3.out'})});
+ScrollTrigger.batch('.curso-card',{start:'top 90%',once:true,
+  onEnter:b=>gsap.from(b,{y:50,autoAlpha:0,scale:.96,stagger:.09,duration:.8,ease:'power3.out'})});
 
 /* ── 3D TILT on cards ── */
 document.querySelectorAll('.curso-card').forEach(card=>{
