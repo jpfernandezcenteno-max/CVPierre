@@ -16,12 +16,14 @@
   --border:#1E1E1C;--teal:#3DD6C8;--teal-dim:rgba(61,214,200,.09);
   --gold:#C8B89A;--ink:#E8E5DE;--mid:#888580;--muted:#3C3C38;
   --rule:#222220;--glow:rgba(61,214,200,.16);
+  --hero-dim:rgba(8,8,7,0.92);
 }
 [data-theme="light"]{
   --bg:#F2EFE9;--surface:#FDFCF8;--surface2:#F0EDE6;
   --border:#E2DED6;--teal:#2D6A6A;--teal-dim:rgba(45,106,106,.08);
   --gold:#8A7C68;--ink:#111110;--mid:#4A4A45;--muted:#9A9A94;
   --rule:#E2DED6;--glow:rgba(45,106,106,.12);
+  --hero-dim:rgba(242,239,233,0.90);
 }
 
 html{font-size:16px;scroll-behavior:smooth}
@@ -84,7 +86,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .hero-contact a{color:var(--teal);text-decoration:none;transition:opacity .3s}
 .hero-contact a:hover{opacity:.7}
 
-.hero-name{line-height:.88;margin-bottom:36px}
+.hero-name{line-height:.88;margin-bottom:36px;width:100vw;margin-left:calc(-50vw + 50%);padding:0 48px;box-sizing:border-box}
 .hline{overflow:hidden;display:block;padding-bottom:.06em}
 .htext{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7.8vw,112px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;color:var(--ink);display:block;will-change:transform;transition:color .4s}
 .htext.ac{color:var(--teal)}
@@ -102,7 +104,10 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .hero-cue-text{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .hero-cue-arrow{width:1px;height:52px;background:linear-gradient(to bottom,var(--teal),transparent);animation:drop 2s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
-@media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{gap:28px}.htext{font-size:clamp(2.4rem,12vw,74px)}}
+@media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{gap:28px}.htext{font-size:clamp(2.4rem,12vw,74px)}.hero-name{padding:0 24px}}
+
+/* HERO FLASHLIGHT */
+#hero-light{position:absolute;inset:0;z-index:2;pointer-events:none;--lx:50%;--ly:50%;background:radial-gradient(circle at var(--lx) var(--ly),transparent 0,transparent 150px,var(--hero-dim) 340px);opacity:0;transition:opacity .5s ease}
 
 /* FORMACIÓN */
 #form{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s;padding-bottom:0}
@@ -289,6 +294,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
   <div class="blob b1" id="b1"></div>
   <div class="blob b2" id="b2"></div>
   <div class="blob b3" id="b3"></div>
+  <div id="hero-light"></div>
   <div class="hero-inner">
     <div class="hero-top" id="heroTop">
       <div class="hero-tag">Arequipa, Perú &nbsp;—&nbsp; Disponible</div>
@@ -1017,6 +1023,21 @@ if(mqTrack){
 
 /* ── REDUCED MOTION ── */
 gsap.matchMedia().add('(prefers-reduced-motion:reduce)',()=>{gsap.globalTimeline.timeScale(20)});
+
+/* ── HERO FLASHLIGHT ── */
+(function(){
+  const heroEl = document.getElementById('hero');
+  const lt = document.getElementById('hero-light');
+  if(!heroEl || !lt) return;
+  let visible = false;
+  heroEl.addEventListener('mousemove', e => {
+    const r = heroEl.getBoundingClientRect();
+    lt.style.setProperty('--lx', (e.clientX - r.left) + 'px');
+    lt.style.setProperty('--ly', (e.clientY - r.top) + 'px');
+    if(!visible){ lt.style.opacity = '1'; visible = true; }
+  });
+  heroEl.addEventListener('mouseleave', () => { lt.style.opacity = '0'; visible = false; });
+})();
 </script>
 </body>
 </html>
