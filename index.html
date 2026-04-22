@@ -105,26 +105,27 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 @media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{gap:28px}.htext{font-size:clamp(2.4rem,12vw,74px)}}
 
 /* FORMACIÓN */
-#form{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s}
-.form-cols{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;max-width:900px;margin:0 auto}
-@media(max-width:760px){.form-cols{grid-template-columns:1fr;gap:48px}}
-.form-sub{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.form-sub::after{content:'';flex:1;height:1px;background:var(--border)}
-.edu-entry{display:grid;grid-template-columns:30px 1fr;gap:0 16px;padding:18px 0;border-bottom:1px solid var(--border);align-items:start;transition:border-color .4s}
-.edu-entry:first-of-type{padding-top:0}
-.edu-entry:last-of-type{border-bottom:none}
-.edu-dot{display:flex;justify-content:center;padding-top:5px}
-.edu-dot span{width:9px;height:9px;border:2px solid var(--teal);border-radius:50%;display:block;transition:background .2s,border-color .3s}
-.edu-entry:hover .edu-dot span{background:var(--teal)}
-.edu-deg{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;transition:color .3s}
-.edu-inst{font-size:.95rem;color:var(--ink);margin-bottom:3px;transition:color .4s}
-.edu-year{font-size:.72rem;color:var(--muted);font-style:italic;transition:color .4s}
-.diplo-entry{padding:18px 0;border-bottom:1px solid var(--border);transition:border-color .4s}
-.diplo-entry:first-of-type{padding-top:0}
-.diplo-entry:last-of-type{border-bottom:none}
-.diplo-name{font-size:.95rem;font-weight:500;color:var(--ink);line-height:1.4;margin-bottom:5px;transition:color .4s}
-.diplo-inst{font-size:.78rem;color:var(--teal);font-weight:300;margin-bottom:3px;transition:color .3s}
-.diplo-year{font-size:.7rem;color:var(--muted);font-style:italic;transition:color .4s}
+#form{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s;padding-bottom:0}
+.edu-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:56px}
+@media(max-width:900px){.edu-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.edu-grid{grid-template-columns:1fr}}
+.edu-card{padding:48px 40px;border-right:1px solid var(--border);position:relative;transition:background .3s}
+.edu-card:last-child{border-right:none}
+.edu-card:hover{background:var(--bg)}
+.edu-card-num{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:var(--border);line-height:1;margin-bottom:32px;transition:color .3s}
+.edu-card:hover .edu-card-num{color:var(--teal)}
+.edu-card-deg{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.edu-card-inst{font-size:1rem;color:var(--ink);margin-bottom:6px;font-weight:500}
+.edu-card-year{font-size:.75rem;color:var(--muted);font-style:italic}
+.diplo-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+@media(max-width:760px){.diplo-strip{grid-template-columns:1fr}}
+.diplo-big{padding:48px 40px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:14px;transition:background .3s}
+.diplo-big:last-child{border-right:none}
+.diplo-big:hover{background:var(--bg)}
+.diplo-big-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:var(--teal);opacity:.4;line-height:1}
+.diplo-big-name{font-size:1rem;font-weight:500;color:var(--ink);line-height:1.5;transition:color .4s}
+.diplo-big-inst{font-size:.78rem;color:var(--teal);font-weight:300}
+.diplo-big-year{font-size:.72rem;color:var(--muted);font-style:italic}
 
 /* EXPERIENCIA — horizontal timeline */
 #exp{height:100vh;overflow:hidden;display:flex;flex-direction:column;padding:60px 0 0;position:relative;transition:background .45s}
@@ -347,44 +348,53 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
   <div class="wrap">
     <div class="sec-label">02 — Formación</div>
     <h2 class="sec-title">Educación &amp; Diplomados</h2>
-    <div class="form-cols">
-      <div>
-        <div class="form-sub">Educación</div>
-        <div class="edu-entry">
-          <div class="edu-dot"><span></span></div>
-          <div><div class="edu-deg">Publicidad</div><div class="edu-inst">Certus</div><div class="edu-year">2021 – Actualidad</div></div>
-        </div>
-        <div class="edu-entry">
-          <div class="edu-dot"><span></span></div>
-          <div><div class="edu-deg">Diseño y Programación Web</div><div class="edu-inst">Instituto del Sur</div><div class="edu-year">2017 – 2020</div></div>
-        </div>
-        <div class="edu-entry">
-          <div class="edu-dot"><span></span></div>
-          <div><div class="edu-deg">Ingeniería de Sistemas</div><div class="edu-inst">Universidad Alas Peruanas</div><div class="edu-year">2013 – 2016</div></div>
-        </div>
-        <div class="edu-entry">
-          <div class="edu-dot"><span></span></div>
-          <div><div class="edu-deg">Primaria y Secundaria</div><div class="edu-inst">Colegio Magister Lagrange</div><div class="edu-year">2001 – 2012</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="form-sub">Diplomados</div>
-        <div class="diplo-entry">
-          <div class="diplo-name">Especialización en Data Analytics, UX y Marketing Digital</div>
-          <div class="diplo-inst">Centrum PUCP · PUCP</div>
-          <div class="diplo-year">Nov 2022 – Mar 2023</div>
-        </div>
-        <div class="diplo-entry">
-          <div class="diplo-name">Microdegree UX / UI Designer</div>
-          <div class="diplo-inst">UTEC &amp; Crehana</div>
-          <div class="diplo-year">Oct 2021 – Feb 2022</div>
-        </div>
-        <div class="diplo-entry">
-          <div class="diplo-name">Microdegree Digital Marketing Specialist</div>
-          <div class="diplo-inst">UTEC &amp; Crehana</div>
-          <div class="diplo-year">Abr 2021 – Ago 2021</div>
-        </div>
-      </div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-card-num">01</div>
+      <div class="edu-card-deg">Publicidad</div>
+      <div class="edu-card-inst">Certus</div>
+      <div class="edu-card-year">2021 – Actualidad</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-card-num">02</div>
+      <div class="edu-card-deg">Diseño y Programación Web</div>
+      <div class="edu-card-inst">Instituto del Sur</div>
+      <div class="edu-card-year">2017 – 2020</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-card-num">03</div>
+      <div class="edu-card-deg">Ingeniería de Sistemas</div>
+      <div class="edu-card-inst">Universidad Alas Peruanas</div>
+      <div class="edu-card-year">2013 – 2016</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-card-num">04</div>
+      <div class="edu-card-deg">Primaria y Secundaria</div>
+      <div class="edu-card-inst">Colegio Magister Lagrange</div>
+      <div class="edu-card-year">2001 – 2012</div>
+    </div>
+  </div>
+
+  <div class="diplo-strip">
+    <div class="diplo-big">
+      <div class="diplo-big-num">01</div>
+      <div class="diplo-big-name">Especialización en Data Analytics, UX y Marketing Digital</div>
+      <div class="diplo-big-inst">Centrum PUCP · PUCP</div>
+      <div class="diplo-big-year">Nov 2022 – Mar 2023</div>
+    </div>
+    <div class="diplo-big">
+      <div class="diplo-big-num">02</div>
+      <div class="diplo-big-name">Microdegree UX / UI Designer</div>
+      <div class="diplo-big-inst">UTEC &amp; Crehana</div>
+      <div class="diplo-big-year">Oct 2021 – Feb 2022</div>
+    </div>
+    <div class="diplo-big">
+      <div class="diplo-big-num">03</div>
+      <div class="diplo-big-name">Microdegree Digital Marketing Specialist</div>
+      <div class="diplo-big-inst">UTEC &amp; Crehana</div>
+      <div class="diplo-big-year">Abr 2021 – Ago 2021</div>
     </div>
   </div>
 </section>
@@ -823,10 +833,6 @@ gsap.utils.toArray('.sec-label,.sec-title').forEach(el=>{
   gsap.from(el,{y:-18,autoAlpha:0,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
 });
 
-ScrollTrigger.batch('.edu-entry,.diplo-entry',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{y:20,autoAlpha:0,stagger:.08,duration:.55,ease:'power2.out'})});
-ScrollTrigger.batch('.form-sub',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{x:-18,autoAlpha:0,stagger:.1,duration:.5,ease:'power2.out'})});
 ScrollTrigger.batch('.sk-group',{start:'top 85%',
   onEnter:b=>gsap.from(b,{y:32,autoAlpha:0,stagger:.1,duration:.65,ease:'power2.out'})});
 ScrollTrigger.batch('.curso-card',{start:'top 90%',
@@ -978,11 +984,10 @@ gsap.utils.toArray('.sec-label').forEach(el=>{
     scrollTrigger:{trigger:el,start:'top 90%'}});
 });
 
-ScrollTrigger.batch('.edu-entry,.diplo-entry',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{y:40,autoAlpha:0,filter:'blur(6px)',stagger:.09,duration:.75,ease:'power3.out'})});
-
-ScrollTrigger.batch('.form-sub',{start:'top 90%',
-  onEnter:b=>gsap.from(b,{x:-20,autoAlpha:0,stagger:.1,duration:.55,ease:'power2.out'})});
+ScrollTrigger.batch('.edu-card',{start:'top 88%',once:true,
+  onEnter:b=>gsap.from(b,{y:40,autoAlpha:0,stagger:.1,duration:.7,ease:'power3.out'})});
+ScrollTrigger.batch('.diplo-big',{start:'top 88%',once:true,
+  onEnter:b=>gsap.from(b,{y:30,autoAlpha:0,stagger:.12,duration:.65,ease:'power2.out'})});
 
 ScrollTrigger.batch('.sk-group',{start:'top 85%',
   onEnter:b=>gsap.from(b,{y:60,autoAlpha:0,filter:'blur(8px)',stagger:.12,duration:.9,ease:'power3.out'})});
