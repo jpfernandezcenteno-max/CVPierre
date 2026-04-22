@@ -214,6 +214,25 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 .ft-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:-.01em;color:var(--ink);transition:color .4s}
 .ft-copy{font-size:.72rem;color:var(--muted);transition:color .4s}
 
+/* NOISE TEXTURE */
+.noise-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9995;opacity:.04;mix-blend-mode:overlay}
+[data-theme="light"] .noise-layer{opacity:.03}
+
+/* MARQUEE */
+.marquee{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;background:var(--surface);transition:background .45s,border-color .4s}
+.mq-track{display:flex}
+.mq-inner{display:flex;align-items:center;gap:28px;padding-right:28px;white-space:nowrap;flex-shrink:0;animation:mq 28s linear infinite}
+.mq-inner:nth-child(2){animation-delay:-14s}
+.mq-inner span{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);transition:color .4s}
+.mq-dot{color:var(--teal)!important;font-size:1rem!important;line-height:0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+
+/* ENHANCED REVEALS — blur + drop */
+.reveal-blur{will-change:transform,opacity,filter}
+
+/* TILT CARDS */
+.curso-card,.exp-card{transform-style:preserve-3d;will-change:transform}
+
 /* PRINT */
 @media print{
   body{background:#fff;color:#111}
@@ -228,6 +247,9 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 </style>
 </head>
 <body>
+
+<!-- Noise grain overlay -->
+<svg class="noise-layer" xmlns="http://www.w3.org/2000/svg"><filter id="nf"><feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#nf)"/></svg>
 
 <div class="cur-dot" id="cDot"></div>
 <div class="cur-ring" id="cRing"></div>
@@ -284,6 +306,36 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
     <span class="hero-cue-arrow"></span>
   </a>
 </section>
+
+<!-- MARQUEE TICKER -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track">
+    <div class="mq-inner">
+      <span>UX / UI Design</span><span class="mq-dot">·</span>
+      <span>E-Commerce</span><span class="mq-dot">·</span>
+      <span>Trafficker Digital</span><span class="mq-dot">·</span>
+      <span>Diseño Gráfico</span><span class="mq-dot">·</span>
+      <span>Google Ads</span><span class="mq-dot">·</span>
+      <span>Figma</span><span class="mq-dot">·</span>
+      <span>Meta Ads</span><span class="mq-dot">·</span>
+      <span>Adobe Illustrator</span><span class="mq-dot">·</span>
+      <span>Shopify</span><span class="mq-dot">·</span>
+      <span>Arequipa, Perú</span><span class="mq-dot">·</span>
+    </div>
+    <div class="mq-inner" aria-hidden="true">
+      <span>UX / UI Design</span><span class="mq-dot">·</span>
+      <span>E-Commerce</span><span class="mq-dot">·</span>
+      <span>Trafficker Digital</span><span class="mq-dot">·</span>
+      <span>Diseño Gráfico</span><span class="mq-dot">·</span>
+      <span>Google Ads</span><span class="mq-dot">·</span>
+      <span>Figma</span><span class="mq-dot">·</span>
+      <span>Meta Ads</span><span class="mq-dot">·</span>
+      <span>Adobe Illustrator</span><span class="mq-dot">·</span>
+      <span>Shopify</span><span class="mq-dot">·</span>
+      <span>Arequipa, Perú</span><span class="mq-dot">·</span>
+    </div>
+  </div>
+</div>
 
 <!-- 02 FORMACIÓN -->
 <section id="form" class="sec">
@@ -831,6 +883,85 @@ document.getElementById('themeBtn').addEventListener('click',()=>{
   const light=document.documentElement.dataset.theme==='light';
   document.documentElement.dataset.theme=light?'dark':'light';
   gsap.fromTo('#themeBtn',{rotation:light?-30:30},{rotation:0,duration:.45,ease:'back.out(2)'});
+});
+
+/* ── SCRAMBLE TEXT ── */
+function scramble(el, delay=0){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&';
+  const orig=el.textContent;
+  let f=0; const total=28;
+  setTimeout(()=>{
+    const tick=()=>{
+      el.textContent=[...orig].map((ch,i)=>{
+        if(ch===' '||ch==='\n') return ch;
+        if(f/total > i/orig.length+.08) return ch;
+        return chars[Math.floor(Math.random()*chars.length)];
+      }).join('');
+      f++;
+      if(f<total+4) requestAnimationFrame(tick);
+      else el.textContent=orig;
+    };
+    tick();
+  }, delay);
+}
+
+/* ── COUNTER ANIMATION on hero stats ── */
+document.querySelectorAll('.stat-n').forEach(el=>{
+  const num=parseInt(el.textContent);
+  if(isNaN(num)) return;
+  const bold=el.querySelector('b');
+  const suffix=bold?bold.outerHTML:'';
+  const obj={v:0};
+  gsap.to(obj,{v:num,duration:2.2,ease:'power3.out',delay:1.2,
+    onUpdate(){el.innerHTML=Math.round(obj.v)+suffix}});
+});
+
+/* ── SECTION LABEL SCRAMBLE on scroll ── */
+gsap.utils.toArray('.sec-label').forEach(el=>{
+  ScrollTrigger.create({trigger:el,start:'top 88%',once:true,
+    onEnter:()=>scramble(el)});
+});
+
+/* ── ENHANCED BLUR-IN REVEALS ── */
+gsap.utils.toArray('.sec-title').forEach(el=>{
+  gsap.from(el,{y:70,autoAlpha:0,filter:'blur(10px)',duration:1.1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%'}});
+});
+
+gsap.utils.toArray('.sec-label').forEach(el=>{
+  gsap.from(el,{y:-16,autoAlpha:0,duration:.7,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 90%'}});
+});
+
+ScrollTrigger.batch('.edu-entry,.diplo-entry',{start:'top 90%',
+  onEnter:b=>gsap.from(b,{y:40,autoAlpha:0,filter:'blur(6px)',stagger:.09,duration:.75,ease:'power3.out'})});
+
+ScrollTrigger.batch('.form-sub',{start:'top 90%',
+  onEnter:b=>gsap.from(b,{x:-20,autoAlpha:0,stagger:.1,duration:.55,ease:'power2.out'})});
+
+ScrollTrigger.batch('.sk-group',{start:'top 85%',
+  onEnter:b=>gsap.from(b,{y:60,autoAlpha:0,filter:'blur(8px)',stagger:.12,duration:.9,ease:'power3.out'})});
+
+ScrollTrigger.batch('.curso-card',{start:'top 90%',
+  onEnter:b=>gsap.from(b,{y:50,autoAlpha:0,filter:'blur(6px)',scale:.96,stagger:.09,duration:.8,ease:'power3.out'})});
+
+/* ── 3D TILT on cards ── */
+document.querySelectorAll('.curso-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-.5)*14;
+    const y=((e.clientY-r.top)/r.height-.5)*-14;
+    gsap.to(card,{rotateX:y,rotateY:x,transformPerspective:700,duration:.3,ease:'power2.out'});
+  });
+  card.addEventListener('mouseleave',()=>{
+    gsap.to(card,{rotateX:0,rotateY:0,duration:.7,ease:'elastic.out(1,.5)'});
+  });
+});
+
+/* ── MARQUEE pause on hover ── */
+document.querySelectorAll('.mq-inner').forEach(el=>{
+  el.addEventListener('mouseenter',()=>el.style.animationPlayState='paused');
+  el.addEventListener('mouseleave',()=>el.style.animationPlayState='running');
 });
 
 /* ── REDUCED MOTION ── */
