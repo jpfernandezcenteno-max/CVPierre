@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pierre Fernandez — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ════════════════════════════
+   TOKENS & DARK MODE
+════════════════════════════ */
+:root {
+  --teal:    #2D6A6A;
+  --teal2:   #1E4F4F;
+  --teal-lt: #E8F2F2;
+  --ink:     #111110;
+  --mid:     #4A4A45;
+  --muted:   #9A9A94;
+  --rule:    #E2DED6;
+  --warm:    #F5F3EE;
+  --paper:   #FDFCF8;
+  --accent:  #C8B89A;
+  --shadow:  0 4px 48px rgba(17,17,16,.09), 0 1px 3px rgba(17,17,16,.06);
+  --glow:    rgba(45,106,106,.12);
+}
+
+[data-theme="dark"] {
+  --teal:    #4ECDC4;
+  --teal2:   #3ABAB1;
+  --teal-lt: #172E2E;
+  --ink:     #EAE7E2;
+  --mid:     #B5B2AB;
+  --muted:   #5E5E58;
+  --rule:    #2C2C2A;
+  --warm:    #161614;
+  --paper:   #1E1E1C;
+  --accent:  #A89878;
+  --shadow:  0 4px 48px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.2);
+  --glow:    rgba(78,205,196,.1);
+}
+
+html { font-size: 13.5px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Epilogue', sans-serif;
+  background: var(--warm);
+  color: var(--ink);
+  min-height: 100vh;
+  transition: background .45s ease, color .45s ease;
+  padding: 40px 0 80px;
+}
+
+/* hide default cursor only on fine pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+}
+
+/* ════════════════════════════
+   CUSTOM CURSOR
+════════════════════════════ */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: var(--teal);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: background .3s, width .15s, height .15s;
+  will-change: transform;
+}
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--teal);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: .55;
+  transition: border-color .3s;
+  will-change: transform;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ════════════════════════════
+   SCROLL PROGRESS
+════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--accent) 100%);
+  z-index: 9990;
+  transform-origin: left;
+}
+
+/* ════════════════════════════
+   THEME TOGGLE
+════════════════════════════ */
+.theme-toggle {
+  position: fixed;
+  top: 20px; right: 20px;
+  z-index: 1000;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  background: var(--paper);
+  cursor: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .4s, border-color .4s, box-shadow .3s;
+  box-shadow: 0 2px 16px var(--glow), 0 1px 3px rgba(0,0,0,.08);
+  outline: none;
+}
+@media (hover: hover) { .theme-toggle { cursor: none; } }
+@media (hover: none)  { .theme-toggle { cursor: pointer; } }
+.theme-toggle:hover { box-shadow: 0 4px 20px var(--glow), 0 1px 4px rgba(0,0,0,.1); }
+
+.theme-toggle svg {
+  width: 17px; height: 17px;
+  stroke: var(--teal);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke .3s;
+}
+.icon-sun  { display: block; }
+.icon-moon { display: none; }
+[data-theme="dark"] .icon-sun  { display: none; }
+[data-theme="dark"] .icon-moon { display: block; }
+
+/* ════════════════════════════
+   CV WRAPPER
+════════════════════════════ */
+.cv {
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: background .45s, box-shadow .45s;
+}
+
+/* Decorative teal stripe — real element for GSAP */
+.cv-stripe {
+  position: absolute;
+  top: 0; left: 54px;
+  width: 3px;
+  height: 320px;
+  background: var(--teal);
+  z-index: 0;
+  transform-origin: top center;
+  transform: scaleY(0);
+  transition: background .3s;
+}
+
+/* ════════════════════════════
+   HEADER
+════════════════════════════ */
+.header {
+  display: grid;
+  grid-template-columns: 57px 1fr auto;
+  gap: 0;
+  padding: 56px 56px 44px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .4s;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 15% 60%, var(--glow) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background .45s;
+}
+
+.header-index {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+.dot-big {
+  width: 14px; height: 14px;
+  background: var(--teal);
+  border-radius: 50%;
+  margin-left: 4px;
+  transition: background .3s;
+  will-change: transform;
+}
+
+.header-name {
+  padding-left: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.name-display {
+  font-family: 'Syne', sans-serif;
+  font-size: 4.8rem;
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: -3px;
+  color: var(--ink);
+  text-transform: uppercase;
+  transition: color .4s;
+}
+.name-line {
+  display: block;
+  overflow: hidden;
+  line-height: 1;
+  padding-bottom: .08em;
+}
+.name-line em {
+  color: var(--teal);
+  font-style: normal;
+  display: block;
+  transition: color .3s;
+}
+
+/* spans for per-letter animation */
+.letter { display: inline-block; will-change: transform, opacity; }
+
+.name-role {
+  margin-top: 18px;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  align-items: center;
+  transition: color .4s;
+}
+.name-role span { color: var(--teal); transition: color .3s; }
+
+.header-contact {
+  text-align: right;
+  font-size: .75rem;
+  color: var(--mid);
+  font-weight: 300;
+  line-height: 2.1;
+  align-self: flex-end;
+  position: relative;
+  z-index: 1;
+  transition: color .4s;
+}
+.header-contact a {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 400;
+  position: relative;
+  transition: color .3s;
+}
+.header-contact a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: var(--teal);
+  transition: width .3s ease;
+}
+.header-contact a:hover::after { width: 100%; }
+
+/* ════════════════════════════
+   BODY GRID
+════════════════════════════ */
+.body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 0;
+}
+
+/* ════════════════════════════
+   LEFT COLUMN
+════════════════════════════ */
+.left {
+  border-right: 1px solid var(--rule);
+  padding: 0 0 60px;
+  transition: border-color .4s;
+}
+
+/* ════════════════════════════
+   RIGHT COLUMN
+════════════════════════════ */
+.right { padding: 0 0 60px; }
+
+/* ════════════════════════════
+   SECTION GENERIC
+════════════════════════════ */
+.sec { padding: 36px 0 0; }
+.left .sec  { padding-right: 36px; }
+.right .sec { padding-left: 40px; padding-right: 56px; }
+
+.sec-head {
+  display: grid;
+  grid-template-columns: 57px 1fr;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.right .sec-head { grid-template-columns: 1fr; }
+
+.sec-num {
+  font-family: 'Syne', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--teal);
+  text-align: center;
+  position: relative;
+  transition: color .3s;
+}
+.sec-num::after {
+  content: '';
+  display: block;
+  width: 6px; height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  margin: 5px auto 0;
+  transition: background .3s;
+}
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--teal);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--teal);
+  display: inline-block;
+  transition: color .3s, border-color .3s;
+}
+.right .sec-title {
+  display: block;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  border-top: none;
+  padding-bottom: 10px;
+}
+
+/* ════════════════════════════
+   SKILLS
+════════════════════════════ */
+.skills-group { margin-bottom: 26px; }
+
+.skills-group-name {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0 10px 57px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 14px;
+  transition: color .4s, border-color .4s;
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 57px 26px 1fr 38px;
+  align-items: center;
+  gap: 0 10px;
+  margin-bottom: 11px;
+  transition: opacity .2s;
+}
+.skill-item:hover .skill-name { color: var(--ink); }
+
+.skill-icon { display: flex; align-items: center; justify-content: center; }
+.skill-icon svg { width: 20px; height: 20px; }
+
+.skill-name {
+  font-size: .76rem;
+  font-weight: 400;
+  color: var(--mid);
+  transition: color .3s;
+}
+
+/* Skill track — inner fill div for GSAP */
+.skill-track {
+  height: 3px;
+  background: var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: background .4s;
+}
+.skill-fill {
+  height: 100%;
+  width: 0;
+  background: var(--teal);
+  border-radius: 3px;
+  will-change: width;
+  transition: background .3s;
+}
+
+.skill-pct {
+  font-size: .62rem;
+  color: var(--muted);
+  text-align: right;
+  font-weight: 500;
+  transition: color .4s;
+}
+
+/* tag pills */
+.tag-row { padding-left: 57px; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag {
+  font-size: .64rem;
+  color: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 20px;
+  padding: 3px 11px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  transition: background .2s, color .2s, border-color .3s;
+  cursor: default;
+}
+.tag:hover {
+  background: var(--teal);
+  color: var(--paper);
+}
+
+/* ════════════════════════════
+   EDUCACIÓN
+════════════════════════════ */
+.edu-item {
+  display: grid;
+  grid-template-columns: 57px 1fr;
+  gap: 0 10px;
+  margin-bottom: 18px;
+  align-items: start;
+}
+.edu-dot {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+.edu-dot span {
+  width: 8px; height: 8px;
+  border: 2px solid var(--teal);
+  border-radius: 50%;
+  display: block;
+  transition: border-color .3s, background .2s;
+}
+.edu-item:hover .edu-dot span { background: var(--teal); }
+.edu-lvl {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 2px;
+  transition: color .3s;
+}
+.edu-inst { font-size: .84rem; font-weight: 400; color: var(--ink); margin-bottom: 1px; transition: color .4s; }
+.edu-date { font-size: .65rem; color: var(--muted); font-style: italic; transition: color .4s; }
+
+/* ════════════════════════════
+   DIPLOMADOS
+════════════════════════════ */
+.diplo-item {
+  display: grid;
+  grid-template-columns: 57px 1fr;
+  gap: 0 10px;
+  margin-bottom: 16px;
+  align-items: start;
+}
+.diplo-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 3px;
+}
+.diplo-line span {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: block;
+  transition: background .3s;
+}
+.diplo-name {
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 2px;
+  line-height: 1.35;
+  transition: color .4s;
+}
+.diplo-inst { font-size: .68rem; color: var(--teal); font-weight: 300; margin-bottom: 1px; transition: color .3s; }
+.diplo-date { font-size: .62rem; color: var(--muted); font-style: italic; transition: color .4s; }
+
+/* ════════════════════════════
+   EXPERIENCIA
+════════════════════════════ */
+.right-exp-wrap {
+  position: relative;
+  padding-left: 40px;
+}
+
+/* Real timeline line for GSAP scrub */
+.timeline-line {
+  position: absolute;
+  left: 0; top: 36px;
+  width: 1px;
+  height: calc(100% - 36px);
+  background: linear-gradient(to bottom, var(--teal), transparent);
+  opacity: .28;
+  transform-origin: top center;
+  transform: scaleY(0);
+  transition: opacity .4s, background .3s;
+}
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  gap: 2px 16px;
+  padding: 18px 12px 18px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+  position: relative;
+  border-left: 2px solid transparent;
+  transition:
+    border-color .25s,
+    background .25s,
+    padding-left .25s,
+    border-bottom-color .4s;
+}
+.exp-item:last-child { border-bottom: none; }
+
+.exp-item:hover {
+  border-left-color: var(--teal);
+  background: var(--teal-lt);
+  padding-left: 10px;
+}
+
+/* Real dot element */
+.exp-dot {
+  position: absolute;
+  left: -43px;
+  top: 26px;
+  width: 7px; height: 7px;
+  background: var(--paper);
+  border: 2px solid var(--teal);
+  border-radius: 50%;
+  transition: background .2s, border-color .3s, transform .25s ease;
+  z-index: 1;
+}
+.exp-item:hover .exp-dot {
+  background: var(--teal);
+  transform: scale(1.5);
+}
+
+.exp-role {
+  font-family: 'Syne', sans-serif;
+  font-size: .76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--ink);
+  margin-bottom: 4px;
+  transition: color .4s;
+}
+.exp-company {
+  font-size: .92rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--teal);
+  margin-bottom: 3px;
+  transition: color .3s;
+}
+.exp-meta { font-size: .65rem; color: var(--muted); font-weight: 300; transition: color .4s; }
+
+.exp-date { text-align: right; padding-top: 3px; }
+.exp-date-range {
+  font-size: .68rem;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.6;
+  display: block;
+  transition: color .4s;
+}
+.exp-date-type {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 2px;
+  transition: color .3s;
+}
+
+.exp-group-label {
+  font-family: 'Syne', sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 22px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color .4s;
+}
+.exp-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--accent);
+  opacity: .4;
+}
+
+/* ════════════════════════════
+   CURSOS
+════════════════════════════ */
+.cursos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.curso-block {
+  background: var(--warm);
+  border-top: 2px solid var(--teal);
+  padding: 14px 16px 16px;
+  transition: background .4s, border-color .3s, transform .25s ease, box-shadow .25s;
+}
+.curso-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px var(--glow);
+}
+.curso-plat {
+  font-family: 'Syne', sans-serif;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+  transition: color .3s;
+}
+.curso-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.curso-tag {
+  font-size: .62rem;
+  color: var(--mid);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 2px 7px;
+  font-weight: 300;
+  line-height: 1.6;
+  transition: color .4s, background .4s, border-color .4s;
+}
+
+/* ════════════════════════════
+   KEYFRAMES
+════════════════════════════ */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45,106,106,.4); }
+  50%       { box-shadow: 0 0 0 7px transparent; }
+}
+.dot-big { animation: pulse-dot 3.5s ease infinite; }
+
+/* ════════════════════════════
+   PRINT
+════════════════════════════ */
+@media print {
+  body { background: white; padding: 0; cursor: auto; }
+  .cursor-dot, .cursor-ring, .scroll-progress, .theme-toggle { display: none; }
+  .cv { margin: 0; box-shadow: none; }
+  .cv-stripe     { transform: scaleY(1) !important; }
+  .skill-fill    { width: var(--final-width, 0) !important; }
+  .timeline-line { transform: scaleY(1) !important; }
+  .exp-item:hover { background: none; padding-left: 0; border-left-color: transparent; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor-dot"  id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Scroll progress bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+  <svg class="icon-sun" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<div class="cv">
+
+  <!-- Teal stripe — animado por GSAP -->
+  <div class="cv-stripe"></div>
+
+  <!-- ══ HEADER ══ -->
+  <div class="header">
+    <div class="header-index"><div class="dot-big"></div></div>
+
+    <div class="header-name">
+      <div class="name-display">
+        <span class="name-line" id="nameLine1">Pierre</span>
+        <span class="name-line" id="nameLine2"><em>Fernandez</em></span>
+      </div>
+      <div class="name-role" id="nameRole">
+        <span>UX / UI Designer</span>
+        <span>·</span>E-Commerce Marketing
+        <span>·</span>Digital Trafficker
+      </div>
+    </div>
+
+    <div class="header-contact" id="headerContact">
+      Arequipa, Perú<br>
+      <a href="mailto:jp.fernandez.centeno@gmail.com">jp.fernandez.centeno@gmail.com</a><br>
+      +51 000 000 000<br>
+      <a href="#">linkedin.com/in/pierre</a>
+    </div>
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="body">
+
+    <!-- ════ LEFT ════ -->
+    <div class="left">
+
+      <!-- SKILLS -->
+      <div class="sec">
+        <div class="sec-head">
+          <div class="sec-num">01</div>
+          <div class="sec-title">Skills</div>
+        </div>
+
+        <!-- Diseño Gráfico -->
+        <div class="skills-group">
+          <div class="skills-group-name">Diseño Gráfico</div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="11" font-weight="bold" fill="var(--teal)">Ai</text>
+              </svg>
+            </div>
+            <div class="skill-name">Illustrator</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="100"></div></div>
+            <div class="skill-pct">100%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="11" font-weight="bold" fill="var(--teal)">Ps</text>
+              </svg>
+            </div>
+            <div class="skill-name">Photoshop</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="85"></div></div>
+            <div class="skill-pct">85%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="11" font-weight="bold" fill="var(--teal)">Lr</text>
+              </svg>
+            </div>
+            <div class="skill-name">LightRoom</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="80"></div></div>
+            <div class="skill-pct">80%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="10" font-weight="bold" fill="var(--teal)">Id</text>
+              </svg>
+            </div>
+            <div class="skill-name">InDesign</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="70"></div></div>
+            <div class="skill-pct">70%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="10" font-weight="bold" fill="var(--teal)">Ae</text>
+              </svg>
+            </div>
+            <div class="skill-name">After Effects</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="50"></div></div>
+            <div class="skill-pct">50%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="5" y="16" font-family="serif" font-size="10" font-weight="bold" fill="var(--teal)">Pr</text>
+              </svg>
+            </div>
+            <div class="skill-name">Premiere Pro</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="40"></div></div>
+            <div class="skill-pct">40%</div>
+          </div>
+        </div>
+
+        <!-- UX / UI -->
+        <div class="skills-group">
+          <div class="skills-group-name">UX / UI Design</div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M9 3h6v6H9z" fill="var(--teal)" opacity=".7"/>
+                <path d="M9 9h6v6H9z" fill="var(--teal)" opacity=".5"/>
+                <path d="M9 15h6v6H9z" fill="var(--teal)" opacity=".3"/>
+                <circle cx="15" cy="12" r="3" fill="var(--teal)"/>
+              </svg>
+            </div>
+            <div class="skill-name">Figma</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="80"></div></div>
+            <div class="skill-pct">80%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".12"/>
+                <text x="4" y="16" font-family="serif" font-size="10" font-weight="bold" fill="var(--teal)">Xd</text>
+              </svg>
+            </div>
+            <div class="skill-name">Adobe XD</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="40"></div></div>
+            <div class="skill-pct">40%</div>
+          </div>
+        </div>
+
+        <!-- Programación -->
+        <div class="skills-group">
+          <div class="skills-group-name">Programación Web</div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 5l-4 14" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">HTML / CSS</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="90"></div></div>
+            <div class="skill-pct">90%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M4 6h16M4 12h10M4 18h13" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M17 14l3 3-3 3" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">Bootstrap</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="85"></div></div>
+            <div class="skill-pct">85%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M6 8l4 4-4 4M12 18h6" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">JavaScript</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="70"></div></div>
+            <div class="skill-pct">70%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M4 8h16M4 12h16M4 16h16M8 4v16" stroke="var(--teal)" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">SQL</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="60"></div></div>
+            <div class="skill-pct">60%</div>
+          </div>
+        </div>
+
+        <!-- Analítica -->
+        <div class="skills-group">
+          <div class="skills-group-name">Analítica y Pauta Digital</div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <circle cx="12" cy="12" r="4" stroke="var(--teal)" stroke-width="1.5"/>
+                <path d="M12 8V4M12 20v-4M8 12H4M20 12h-4" stroke="var(--teal)" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">Google Ads</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="90"></div></div>
+            <div class="skill-pct">90%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M7 12c0-2 1.5-3.5 3-3.5s2.5 3 4 3 3-1.5 3-3.5-1.5-3.5-3-3.5-2.5 3-4 3S7 14 7 12z" stroke="var(--teal)" stroke-width="1.4" fill="none"/>
+              </svg>
+            </div>
+            <div class="skill-name">Meta Business Mgr</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="90"></div></div>
+            <div class="skill-pct">90%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M4 16l4-4 4 4 4-8 4 4" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">Google Analytics</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="70"></div></div>
+            <div class="skill-pct">70%</div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="3" fill="var(--teal)" opacity=".1"/>
+                <path d="M4 12h4l2-4 4 8 2-4h4" stroke="var(--teal)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="skill-name">Google Tag Manager</div>
+            <div class="skill-track"><div class="skill-fill" data-pct="70"></div></div>
+            <div class="skill-pct">70%</div>
+          </div>
+        </div>
+
+        <!-- CMS -->
+        <div class="skills-group">
+          <div class="skills-group-name">CMS & E-Commerce</div>
+          <div class="tag-row">
+            <span class="tag">Shopify</span>
+            <span class="tag">WordPress</span>
+            <span class="tag">Amazon Seller</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMACIÓN -->
+      <div class="sec">
+        <div class="sec-head">
+          <div class="sec-num">02</div>
+          <div class="sec-title">Formación</div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-dot"><span></span></div>
+          <div>
+            <div class="edu-lvl">Publicidad</div>
+            <div class="edu-inst">Certus</div>
+            <div class="edu-date">2021 – Actualidad</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"><span></span></div>
+          <div>
+            <div class="edu-lvl">Diseño y Programación Web</div>
+            <div class="edu-inst">Instituto del Sur</div>
+            <div class="edu-date">2017 – 2020</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"><span></span></div>
+          <div>
+            <div class="edu-lvl">Ingeniería de Sistemas</div>
+            <div class="edu-inst">Universidad Alas Peruanas</div>
+            <div class="edu-date">2013 – 2016</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"><span></span></div>
+          <div>
+            <div class="edu-lvl">Primaria y Secundaria</div>
+            <div class="edu-inst">Colegio Magister Lagrange</div>
+            <div class="edu-date">2001 – 2012</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIPLOMADOS -->
+      <div class="sec">
+        <div class="sec-head">
+          <div class="sec-num">03</div>
+          <div class="sec-title">Diplomados</div>
+        </div>
+
+        <div class="diplo-item">
+          <div class="diplo-line"><span></span></div>
+          <div>
+            <div class="diplo-name">Especialización en Data Analytics, UX y Marketing Digital</div>
+            <div class="diplo-inst">Centrum PUCP · PUCP</div>
+            <div class="diplo-date">Nov 2022 – Mar 2023</div>
+          </div>
+        </div>
+        <div class="diplo-item">
+          <div class="diplo-line"><span></span></div>
+          <div>
+            <div class="diplo-name">Microdegree UX / UI Designer</div>
+            <div class="diplo-inst">UTEC & Crehana</div>
+            <div class="diplo-date">Oct 2021 – Feb 2022</div>
+          </div>
+        </div>
+        <div class="diplo-item">
+          <div class="diplo-line"><span></span></div>
+          <div>
+            <div class="diplo-name">Microdegree Digital Marketing Specialist</div>
+            <div class="diplo-inst">UTEC & Crehana</div>
+            <div class="diplo-date">Abr 2021 – Ago 2021</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- ════ RIGHT ════ -->
+    <div class="right">
+
+      <!-- EXPERIENCIA -->
+      <div class="sec">
+        <div class="sec-head">
+          <div class="sec-title">Experiencia Profesional</div>
+        </div>
+
+        <div class="right-exp-wrap">
+          <div class="timeline-line"></div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">E-Commerce Analyst & Trafficker Digital</div>
+              <div class="exp-company">Kuna · Alpaca & Vicuña / Incalpaca</div>
+              <div class="exp-meta">Full Time · Presencial · Marketing E-Commerce</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">May 2024 – May 2025</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">E-Commerce Marketing Assistant</div>
+              <div class="exp-company">Kuna · Alpaca & Vicuña / Incalpaca</div>
+              <div class="exp-meta">Full Time · Presencial · Marketing E-Commerce</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Dic 2023 – May 2024</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">User Experience Designer</div>
+              <div class="exp-company">Kuna · Alpaca & Vicuña / Incalpaca</div>
+              <div class="exp-meta">Full Time · Presencial · Marketing E-Commerce</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Oct 2022 – Dic 2023</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Coordinator</div>
+              <div class="exp-company">Eartha Consulting</div>
+              <div class="exp-meta">Full Time → Part Time · Remoto</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Remoto</span>
+              <span class="exp-date-range">Ago 2022 – Dic 2023</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Coordinator</div>
+              <div class="exp-company">Agencia Venddo</div>
+              <div class="exp-meta">Full Time · Presencial · Ascenso</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Oct 2021 – Sep 2022</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Content Manager</div>
+              <div class="exp-company">Agencia Venddo</div>
+              <div class="exp-meta">Full Time · Presencial</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Abr 2021 – Oct 2021</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Assistant</div>
+              <div class="exp-company">Cognitio Management</div>
+              <div class="exp-meta">Full Time · Presencial · Grupo Venddo</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Ene 2021 – Oct 2021</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Assistant</div>
+              <div class="exp-company">Grupo Upgrade</div>
+              <div class="exp-meta">Full Time · Presencial</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Full Time</span>
+              <span class="exp-date-range">Ene 2019 – Oct 2020</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Diseñador Gráfico</div>
+              <div class="exp-company">Grupo Palmyra</div>
+              <div class="exp-meta">Part Time · Presencial</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Part Time</span>
+              <span class="exp-date-range">Ene 2018 – Mar 2018</span>
+            </div>
+          </div>
+
+          <div class="exp-group-label">Freelance</div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Data Analyst</div>
+              <div class="exp-company">Certification Service Perú</div>
+              <div class="exp-meta">Freelance · Remoto</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Freelance</span>
+              <span class="exp-date-range">Oct 2022 – Nov 2023</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-role">Marketing Data Analyst</div>
+              <div class="exp-company">Imperium Fitness Gym</div>
+              <div class="exp-meta">Freelance · Remoto</div>
+            </div>
+            <div class="exp-date">
+              <span class="exp-date-type">Freelance</span>
+              <span class="exp-date-range">Sep – Oct 2022</span>
+            </div>
+          </div>
+
+        </div><!-- /right-exp-wrap -->
+      </div>
+
+      <!-- CURSOS -->
+      <div class="sec" style="padding-top:32px">
+        <div class="sec-head">
+          <div class="sec-title">Cursos Online</div>
+        </div>
+
+        <div class="cursos-grid">
+
+          <div class="curso-block">
+            <div class="curso-plat">Hotmart</div>
+            <div class="curso-tags">
+              <span class="curso-tag">Prototipado y animación en Figma</span>
+              <span class="curso-tag">Auto Layout en Figma</span>
+              <span class="curso-tag">UX / UI Design en Figma</span>
+            </div>
+          </div>
+
+          <div class="curso-block">
+            <div class="curso-plat">Udemy</div>
+            <div class="curso-tags">
+              <span class="curso-tag">WordPress 2020</span>
+              <span class="curso-tag">Bootstrap de 0 a experto</span>
+              <span class="curso-tag">Adobe XD</span>
+            </div>
+          </div>
+
+          <div class="curso-block" style="grid-column:span 2">
+            <div class="curso-plat">Netzun</div>
+            <div class="curso-tags">
+              <span class="curso-tag">Branding y estrategia de marca</span>
+              <span class="curso-tag">Branding y propósito de marca</span>
+              <span class="curso-tag">Implementación y desarrollo de marcas</span>
+              <span class="curso-tag">Community Management</span>
+              <span class="curso-tag">Investigación de mercado</span>
+              <span class="curso-tag">Inbound Marketing</span>
+              <span class="curso-tag">Social Media</span>
+              <span class="curso-tag">Google Adwords</span>
+              <span class="curso-tag">Creatividad digital</span>
+              <span class="curso-tag">SEO</span>
+            </div>
+          </div>
+
+          <div class="curso-block" style="grid-column:span 2">
+            <div class="curso-plat">Crehana</div>
+            <div class="curso-tags">
+              <span class="curso-tag">Identidad Corporativa</span>
+              <span class="curso-tag">Branding desde cero</span>
+              <span class="curso-tag">Diseño de logotipos</span>
+              <span class="curso-tag">Adobe Illustrator: Ilustración digital</span>
+              <span class="curso-tag">Photoshop CC desde cero</span>
+              <span class="curso-tag">Retoque Digital Creativo</span>
+              <span class="curso-tag">Retoque digital de alimentos</span>
+              <span class="curso-tag">Retoque Matte Painting</span>
+              <span class="curso-tag">Retoque Fotográfico desde cero</span>
+              <span class="curso-tag">Fotografía de producto</span>
+              <span class="curso-tag">Técnicas de iluminación fotográfica</span>
+              <span class="curso-tag">Maquetación de sitios web</span>
+              <span class="curso-tag">Facebook Ads</span>
+              <span class="curso-tag">SEO desde cero</span>
+              <span class="curso-tag">Google Adwords desde cero</span>
+            </div>
+          </div>
+
+          <div class="curso-block" style="grid-column:span 2">
+            <div class="curso-plat">Domestika</div>
+            <div class="curso-tags">
+              <span class="curso-tag">Plan de medios digitales</span>
+              <span class="curso-tag">Marketing de contenidos</span>
+              <span class="curso-tag">Photoshop para matte painting</span>
+              <span class="curso-tag">Publicación interactiva con InDesign y Bütton</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /right -->
+
+  </div><!-- /body -->
+</div><!-- /cv -->
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─────────────────────────────────────────
+   CUSTOM CURSOR
+───────────────────────────────────────── */
+const dot  = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const xDot  = gsap.quickTo(dot,  'x', { duration: 0 });
+  const yDot  = gsap.quickTo(dot,  'y', { duration: 0 });
+  const xRing = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3' });
+  const yRing = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3' });
+
+  window.addEventListener('mousemove', e => {
+    xDot(e.clientX);
+    yDot(e.clientY);
+    xRing(e.clientX);
+    yRing(e.clientY);
+  });
+
+  /* expand on interactive elements */
+  document.querySelectorAll('a, button, .exp-item, .curso-block, .tag, .skill-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      gsap.to(ring, { scale: 1.9, opacity: 0.35, duration: 0.35, ease: 'power2.out' });
+      gsap.to(dot,  { scale: 0.4, duration: 0.25, ease: 'power2.out' });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(ring, { scale: 1, opacity: 0.55, duration: 0.35, ease: 'power2.out' });
+      gsap.to(dot,  { scale: 1, duration: 0.25, ease: 'power2.out' });
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
+   SCROLL PROGRESS BAR
+───────────────────────────────────────── */
+ScrollTrigger.create({
+  start: 0,
+  end: 'max',
+  onUpdate: self => {
+    gsap.to('#scrollProgress', {
+      width: (self.progress * 100) + '%',
+      duration: 0.1,
+      ease: 'none'
+    });
+  }
+});
+
+/* ─────────────────────────────────────────
+   SPLIT NAME INTO LETTERS
+───────────────────────────────────────── */
+function splitLetters(el) {
+  const raw = el.textContent;
+  el.innerHTML = [...raw].map(ch =>
+    ch === ' ' ? ' ' : `<span class="letter">${ch}</span>`
+  ).join('');
+  return el.querySelectorAll('.letter');
+}
+
+const line1Letters = splitLetters(document.getElementById('nameLine1'));
+const line2Letters = splitLetters(document.querySelector('#nameLine2 em'));
+
+/* ─────────────────────────────────────────
+   INTRO TIMELINE
+───────────────────────────────────────── */
+const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+intro
+  .to('.cv-stripe',   { scaleY: 1, duration: 1.0, ease: 'power4.inOut', transformOrigin: 'top' })
+  .from('.dot-big',   { scale: 0, duration: 0.5, ease: 'back.out(3)' }, 0.45)
+  .from(line1Letters, { y: 95, opacity: 0, stagger: 0.038, duration: 0.75 }, 0.55)
+  .from(line2Letters, { y: 95, opacity: 0, stagger: 0.038, duration: 0.75 }, 0.68)
+  .from('#nameRole',       { autoAlpha: 0, x: -18, duration: 0.6 }, 1.05)
+  .from('#headerContact',  { autoAlpha: 0, x:  18, duration: 0.6 }, 1.05);
+
+/* ─────────────────────────────────────────
+   SKILL BARS (ScrollTrigger per bar)
+───────────────────────────────────────── */
+gsap.utils.toArray('.skill-fill').forEach((fill, i) => {
+  const targetWidth = fill.dataset.pct + '%';
+  fill.style.setProperty('--final-width', targetWidth); /* for print */
+
+  gsap.to(fill, {
+    width: targetWidth,
+    duration: 1.1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: fill,
+      start: 'top 90%',
+      toggleActions: 'play none none reset'
+    }
+  });
+});
+
+/* ─────────────────────────────────────────
+   LEFT COLUMN — section reveal (batch)
+───────────────────────────────────────── */
+ScrollTrigger.batch('.left .sec', {
+  start: 'top 87%',
+  onEnter: batch => gsap.from(batch, {
+    x: -32, autoAlpha: 0,
+    stagger: 0.09, duration: 0.7, ease: 'power2.out'
+  }),
+  onLeaveBack: batch => gsap.to(batch, {
+    autoAlpha: 0, x: -20, duration: 0.4
+  })
+});
+
+/* ─────────────────────────────────────────
+   EDU & DIPLO items
+───────────────────────────────────────── */
+ScrollTrigger.batch('.edu-item, .diplo-item', {
+  start: 'top 90%',
+  onEnter: batch => gsap.from(batch, {
+    y: 18, autoAlpha: 0,
+    stagger: 0.07, duration: 0.55, ease: 'power2.out'
+  })
+});
+
+/* ─────────────────────────────────────────
+   EXPERIENCE — timeline line scrubs with scroll
+───────────────────────────────────────── */
+gsap.to('.timeline-line', {
+  scaleY: 1,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.right-exp-wrap',
+    start: 'top 55%',
+    end:   'bottom 75%',
+    scrub: 1.2
+  }
+});
+
+/* ─────────────────────────────────────────
+   EXPERIENCE ITEMS (batch)
+───────────────────────────────────────── */
+ScrollTrigger.batch('.exp-item', {
+  start: 'top 90%',
+  onEnter: batch => gsap.from(batch, {
+    x: 26, autoAlpha: 0,
+    stagger: 0.075, duration: 0.65, ease: 'power2.out'
+  })
+});
+
+/* group label */
+gsap.utils.toArray('.exp-group-label').forEach(label => {
+  gsap.from(label, {
+    autoAlpha: 0, y: 10, duration: 0.5,
+    scrollTrigger: { trigger: label, start: 'top 90%' }
+  });
+});
+
+/* ─────────────────────────────────────────
+   RIGHT SECTION TITLE
+───────────────────────────────────────── */
+gsap.utils.toArray('.right .sec-title').forEach(title => {
+  gsap.from(title, {
+    autoAlpha: 0, x: 20, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: title, start: 'top 88%' }
+  });
+});
+
+/* ─────────────────────────────────────────
+   CURSO BLOCKS (batch)
+───────────────────────────────────────── */
+ScrollTrigger.batch('.curso-block', {
+  start: 'top 90%',
+  onEnter: batch => gsap.from(batch, {
+    y: 26, autoAlpha: 0, scale: 0.97,
+    stagger: 0.09, duration: 0.65, ease: 'power2.out'
+  })
+});
+
+/* ─────────────────────────────────────────
+   DARK MODE TOGGLE
+───────────────────────────────────────── */
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  gsap.fromTo(themeToggle,
+    { rotation: isDark ? -30 : 30 },
+    { rotation: 0, duration: 0.45, ease: 'back.out(2)' }
+  );
+});
+
+/* ─────────────────────────────────────────
+   RESPECT REDUCED MOTION
+───────────────────────────────────────── */
+const mm = gsap.matchMedia();
+mm.add('(prefers-reduced-motion: reduce)', () => {
+  gsap.globalTimeline.timeScale(20);
+});
+</script>
+</body>
+</html>
