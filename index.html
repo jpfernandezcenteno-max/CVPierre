@@ -86,7 +86,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 
 .hero-name{line-height:.88;margin-bottom:36px}
 .hline{overflow:hidden;display:block;padding-bottom:.06em}
-.htext{font-family:'Syne',sans-serif;font-size:clamp(5rem,12vw,175px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;color:var(--ink);display:block;will-change:transform;transition:color .4s}
+.htext{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7.8vw,112px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;color:var(--ink);display:block;will-change:transform;transition:color .4s}
 .htext.ac{color:var(--teal)}
 
 .hero-role{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 22px;margin-bottom:60px}
@@ -102,7 +102,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .hero-cue-text{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .hero-cue-arrow{width:1px;height:52px;background:linear-gradient(to bottom,var(--teal),transparent);animation:drop 2s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
-@media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{gap:28px}}
+@media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{gap:28px}.htext{font-size:clamp(2.4rem,12vw,74px)}}
 
 /* FORMACIÓN */
 #form{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .45s,border-color .45s}
@@ -233,6 +233,20 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 /* TILT CARDS */
 .curso-card,.exp-card{transform-style:preserve-3d;will-change:transform}
 
+/* EMAIL CURSOR LABEL */
+.email-label{
+  position:fixed;top:0;left:0;
+  background:var(--teal);color:var(--bg);
+  font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 16px;border-radius:20px;
+  pointer-events:none;z-index:9996;
+  opacity:0;transform:translate(-50%,-200%) scale(.8);
+  transition:opacity .22s,transform .22s;
+  white-space:nowrap;
+}
+.email-label.on{opacity:1;transform:translate(-50%,-200%) scale(1)}
+
 /* PRINT */
 @media print{
   body{background:#fff;color:#111}
@@ -280,7 +294,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
       <div class="hero-tag">Arequipa, Perú &nbsp;—&nbsp; Disponible</div>
       <div class="hero-contact">
         <a href="mailto:jp.fernandez.centeno@gmail.com">jp.fernandez.centeno@gmail.com</a><br>
-        +51 000 000 000 &nbsp;·&nbsp; <a href="#">linkedin.com/in/pierre</a>
+        +51 958 348 019 &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/jean-pierre-fern%C3%A1ndez-centeno/" target="_blank" rel="noopener">linkedin.com/in/jean-pierre</a>
       </div>
     </div>
     <div class="hero-name">
@@ -884,6 +898,46 @@ document.getElementById('themeBtn').addEventListener('click',()=>{
   document.documentElement.dataset.theme=light?'dark':'light';
   gsap.fromTo('#themeBtn',{rotation:light?-30:30},{rotation:0,duration:.45,ease:'back.out(2)'});
 });
+
+/* ── EMAIL CURSOR ANIMATION ── */
+(function(){
+  const emailEl = document.querySelector('a[href^="mailto"]');
+  if(!emailEl) return;
+
+  // Create floating label
+  const lbl = document.createElement('div');
+  lbl.className = 'email-label';
+  lbl.textContent = 'Copiar email';
+  document.body.appendChild(lbl);
+
+  const lx = gsap.quickTo(lbl,'x',{duration:.1});
+  const ly = gsap.quickTo(lbl,'y',{duration:.1});
+
+  emailEl.addEventListener('mouseenter', () => {
+    lbl.classList.add('on');
+    // Morph cursor ring into a filled pill
+    if(window.matchMedia('(hover:hover)and(pointer:fine)').matches){
+      gsap.to(ring, {scale:2.6, background:'var(--teal)', opacity:.9, duration:.3, ease:'power2.out'});
+      gsap.to(dot,  {scale:0, duration:.2});
+    }
+  });
+  emailEl.addEventListener('mousemove', e => { lx(e.clientX); ly(e.clientY); });
+  emailEl.addEventListener('mouseleave', () => {
+    lbl.classList.remove('on');
+    if(window.matchMedia('(hover:hover)and(pointer:fine)').matches){
+      gsap.to(ring, {scale:1, background:'transparent', opacity:.5, duration:.35, ease:'power2.out'});
+      gsap.to(dot,  {scale:1, duration:.25});
+    }
+    setTimeout(()=>{ lbl.textContent='Copiar email'; }, 300);
+  });
+  emailEl.addEventListener('click', e => {
+    e.preventDefault();
+    navigator.clipboard.writeText('jp.fernandez.centeno@gmail.com').catch(()=>{});
+    lbl.textContent = '✓ Copiado';
+    gsap.fromTo(lbl, {scale:1.2}, {scale:1, duration:.3, ease:'back.out(3)'});
+    setTimeout(()=>{ lbl.textContent='Copiar email'; }, 2200);
+  });
+})();
 
 /* ── SCRAMBLE TEXT ── */
 function scramble(el, delay=0){
