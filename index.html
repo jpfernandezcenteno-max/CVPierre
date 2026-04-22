@@ -143,14 +143,15 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .exp-viewport{flex:1;overflow:hidden;position:relative}
 .exp-track{display:flex;align-items:stretch;padding:0 52px;gap:0;width:max-content;height:100%}
 @media(max-width:700px){.exp-track{padding:0 24px}}
-.exp-card{width:clamp(300px,calc((100vw - 107px) / 2),680px);flex-shrink:0;padding:0 48px 56px 0;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--border);transition:border-color .4s}
+.exp-card{width:clamp(300px,calc((100vw - 107px) / 2),680px);flex-shrink:0;padding:40px 48px 72px 0;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--border);transition:border-color .4s;position:relative;overflow:hidden}
 .exp-card:last-child{border-right:none;padding-right:52px}
 .exp-card:hover .exp-c-role{color:var(--teal)}
-.exp-c-date{font-size:.78rem;color:var(--teal);font-weight:600;letter-spacing:.06em;margin-bottom:18px;font-family:'Syne',sans-serif}
-.exp-c-role{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;line-height:1.3;transition:color .3s}
-.exp-c-company{font-size:1.05rem;font-weight:300;font-style:italic;color:var(--teal);margin-bottom:8px;line-height:1.35;transition:color .3s}
-.exp-c-meta{font-size:.8rem;color:var(--muted);font-weight:300;transition:color .4s}
-.exp-c-badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);background:var(--gold);border-radius:3px;padding:2px 8px;margin-bottom:14px}
+.exp-c-year-bg{position:absolute;bottom:-16px;right:8px;font-family:'Syne',sans-serif;font-size:clamp(5rem,11vw,9rem);font-weight:800;color:var(--teal);opacity:.05;line-height:1;pointer-events:none;user-select:none;letter-spacing:-.04em;z-index:0}
+.exp-c-date{font-size:.88rem;color:var(--teal);font-weight:600;letter-spacing:.06em;margin-bottom:22px;font-family:'Syne',sans-serif;position:relative;z-index:1}
+.exp-c-role{font-family:'Syne',sans-serif;font-size:clamp(1.2rem,2.4vw,1.9rem);font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;line-height:1.15;transition:color .3s;position:relative;z-index:1}
+.exp-c-company{font-size:1.1rem;font-weight:300;font-style:italic;color:var(--teal);margin-bottom:10px;line-height:1.35;transition:color .3s;position:relative;z-index:1}
+.exp-c-meta{font-size:.82rem;color:var(--muted);font-weight:300;transition:color .4s;position:relative;z-index:1}
+.exp-c-badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);background:var(--gold);border-radius:3px;padding:2px 8px;margin-bottom:14px;position:relative;z-index:1}
 
 /* Fuse timeline bar */
 .exp-bar{position:absolute;bottom:28px;left:0;right:0;height:10px;background:var(--border);border-radius:5px;overflow:visible}
@@ -216,14 +217,17 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .tag:hover{background:var(--teal);color:var(--bg)}
 
 /* CURSOS */
-.cursos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-.curso-card{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--teal);padding:20px 22px 22px;transition:background .4s,border-color .3s,transform .25s,box-shadow .25s}
-.curso-card:hover{transform:translateY(-4px);box-shadow:0 14px 44px var(--glow)}
-.curso-plat{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;transition:color .3s}
-.curso-tags{display:flex;flex-wrap:wrap;gap:6px}
-.ctag{font-size:.72rem;color:var(--mid);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:4px 10px;font-weight:300;line-height:1.6;transition:color .4s,background .4s,border-color .4s}
-.span2{grid-column:span 2}
-@media(max-width:640px){.span2{grid-column:span 1}}
+.cursos-list{display:flex;flex-direction:column;border-top:1px solid var(--border)}
+.cursos-row{display:grid;grid-template-columns:200px 1fr;gap:52px;padding:36px 0;border-bottom:1px solid var(--border);align-items:start;transition:background .3s}
+.cursos-row:hover{background:rgba(61,214,200,.02)}
+@media(max-width:700px){.cursos-row{grid-template-columns:1fr;gap:14px}}
+.cursos-row-num{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.22em;margin-bottom:8px}
+.cursos-row-plat{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--ink);margin-bottom:5px;transition:color .3s}
+.cursos-row:hover .cursos-row-plat{color:var(--teal)}
+.cursos-row-count{font-size:.72rem;color:var(--muted)}
+.cursos-row-right{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
+.ctag{font-size:.78rem;color:var(--mid);background:transparent;border:1px solid var(--border);border-radius:4px;padding:6px 14px;font-weight:300;line-height:1.5;transition:color .25s,border-color .25s}
+.ctag:hover{border-color:var(--teal);color:var(--ink)}
 
 /* FOOTER */
 footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:border-color .4s}
@@ -673,26 +677,41 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
   <div class="wrap">
     <div class="sec-label">05 — Cursos</div>
     <h2 class="sec-title">Cursos Online</h2>
-    <div class="cursos-grid">
-      <div class="curso-card">
-        <div class="curso-plat">Hotmart</div>
-        <div class="curso-tags">
+    <div class="cursos-list">
+
+      <div class="cursos-row">
+        <div class="cursos-row-left">
+          <div class="cursos-row-num">01</div>
+          <div class="cursos-row-plat">Hotmart</div>
+          <div class="cursos-row-count">3 cursos</div>
+        </div>
+        <div class="cursos-row-right">
           <span class="ctag">Prototipado y animación en Figma</span>
           <span class="ctag">Auto Layout en Figma</span>
           <span class="ctag">UX / UI Design en Figma</span>
         </div>
       </div>
-      <div class="curso-card">
-        <div class="curso-plat">Udemy</div>
-        <div class="curso-tags">
+
+      <div class="cursos-row">
+        <div class="cursos-row-left">
+          <div class="cursos-row-num">02</div>
+          <div class="cursos-row-plat">Udemy</div>
+          <div class="cursos-row-count">3 cursos</div>
+        </div>
+        <div class="cursos-row-right">
           <span class="ctag">WordPress 2020</span>
           <span class="ctag">Bootstrap de 0 a experto</span>
           <span class="ctag">Adobe XD</span>
         </div>
       </div>
-      <div class="curso-card span2">
-        <div class="curso-plat">Netzun</div>
-        <div class="curso-tags">
+
+      <div class="cursos-row">
+        <div class="cursos-row-left">
+          <div class="cursos-row-num">03</div>
+          <div class="cursos-row-plat">Netzun</div>
+          <div class="cursos-row-count">10 cursos</div>
+        </div>
+        <div class="cursos-row-right">
           <span class="ctag">Branding y estrategia de marca</span>
           <span class="ctag">Branding y propósito de marca</span>
           <span class="ctag">Implementación y desarrollo de marcas</span>
@@ -705,9 +724,14 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
           <span class="ctag">SEO</span>
         </div>
       </div>
-      <div class="curso-card span2">
-        <div class="curso-plat">Crehana</div>
-        <div class="curso-tags">
+
+      <div class="cursos-row">
+        <div class="cursos-row-left">
+          <div class="cursos-row-num">04</div>
+          <div class="cursos-row-plat">Crehana</div>
+          <div class="cursos-row-count">15 cursos</div>
+        </div>
+        <div class="cursos-row-right">
           <span class="ctag">Identidad Corporativa</span>
           <span class="ctag">Branding desde cero</span>
           <span class="ctag">Diseño de logotipos</span>
@@ -725,15 +749,21 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
           <span class="ctag">Google Adwords desde cero</span>
         </div>
       </div>
-      <div class="curso-card span2">
-        <div class="curso-plat">Domestika</div>
-        <div class="curso-tags">
+
+      <div class="cursos-row">
+        <div class="cursos-row-left">
+          <div class="cursos-row-num">05</div>
+          <div class="cursos-row-plat">Domestika</div>
+          <div class="cursos-row-count">4 cursos</div>
+        </div>
+        <div class="cursos-row-right">
           <span class="ctag">Plan de medios digitales</span>
           <span class="ctag">Marketing de contenidos</span>
           <span class="ctag">Photoshop para matte painting</span>
           <span class="ctag">Publicación interactiva con InDesign y Bütton</span>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -761,7 +791,7 @@ if(window.matchMedia('(hover:hover)and(pointer:fine)').matches){
       cursorReady=true;
     }
   });
-  document.querySelectorAll('a,button,.exp-card,.curso-card,.tag,.ring-item,.vbar-item').forEach(el=>{
+  document.querySelectorAll('a,button,.exp-card,.cursos-row,.tag,.ring-item,.vbar-item').forEach(el=>{
     el.addEventListener('mouseenter',()=>{gsap.to(ring,{scale:1.8,opacity:.3,duration:.3,ease:'power2.out'});gsap.to(dot,{scale:.4,duration:.2})});
     el.addEventListener('mouseleave',()=>{gsap.to(ring,{scale:1,opacity:.5,duration:.3,ease:'power2.out'});gsap.to(dot,{scale:1,duration:.2})});
   });
@@ -858,16 +888,21 @@ gsap.timeline({defaults:{ease:'power4.out'}})
     }
   });
 
-  // Place dots under each card
+  // Place dots + inject year watermark
   const dotsWrap=document.getElementById('expDots');
   document.querySelectorAll('.exp-card').forEach((card,i)=>{
+    // year watermark
+    const dateEl=card.querySelector('.exp-c-date');
+    if(dateEl){
+      const m=dateEl.textContent.match(/\d{4}/);
+      if(m){const bg=document.createElement('div');bg.className='exp-c-year-bg';bg.textContent=m[0];card.appendChild(bg);}
+    }
+    // dot
     const d=document.createElement('div');
     d.className='exp-dot-item';
     setTimeout(()=>{
-      const total=getAmt();
       const cardCenter=card.offsetLeft + card.offsetWidth/2;
       const barW=getBarWidth();
-      // map card position in track to bar position
       const barPos=(cardCenter / (track.scrollWidth)) * barW;
       d.style.left=barPos+'px';
       dots.push({el:d, pos:barPos});
