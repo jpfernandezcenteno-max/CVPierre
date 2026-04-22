@@ -220,12 +220,11 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 
 /* MARQUEE */
 .marquee{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;background:var(--surface);transition:background .45s,border-color .4s}
-.mq-track{display:flex}
-.mq-inner{display:flex;align-items:center;gap:28px;padding-right:28px;white-space:nowrap;flex-shrink:0;animation:mq 28s linear infinite}
-.mq-inner:nth-child(2){animation-delay:-14s}
+.mq-track{display:flex;width:max-content;animation:mq 22s linear infinite}
+.mq-inner{display:flex;align-items:center;gap:32px;padding-right:32px;white-space:nowrap;flex-shrink:0}
 .mq-inner span{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);transition:color .4s}
 .mq-dot{color:var(--teal)!important;font-size:1rem!important;line-height:0}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ENHANCED REVEALS — blur + drop */
 .reveal-blur{will-change:transform,opacity,filter}
@@ -1005,10 +1004,11 @@ document.querySelectorAll('.curso-card').forEach(card=>{
 });
 
 /* ── MARQUEE pause on hover ── */
-document.querySelectorAll('.mq-inner').forEach(el=>{
-  el.addEventListener('mouseenter',()=>el.style.animationPlayState='paused');
-  el.addEventListener('mouseleave',()=>el.style.animationPlayState='running');
-});
+const mqTrack = document.querySelector('.mq-track');
+if(mqTrack){
+  mqTrack.addEventListener('mouseenter',()=>mqTrack.style.animationPlayState='paused');
+  mqTrack.addEventListener('mouseleave',()=>mqTrack.style.animationPlayState='running');
+}
 
 /* ── REDUCED MOTION ── */
 gsap.matchMedia().add('(prefers-reduced-motion:reduce)',()=>{gsap.globalTimeline.timeScale(20)});
