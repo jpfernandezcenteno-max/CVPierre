@@ -363,6 +363,10 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 .radar-canvas:hover .radar-fill{fill-opacity:.32;stroke-width:3}
 .radar-canvas:hover .radar-axis{stroke:var(--teal);opacity:.55}
 .radar-canvas:hover .radar-corner-lbl b{color:var(--teal)}
+.radar-canvas-cms:hover .radar-fill-cms{fill:#A855F7;stroke:#A855F7;fill-opacity:.28;stroke-width:3}
+.radar-canvas-cms:hover .radar-axis{stroke:#A855F7;opacity:.55}
+.radar-canvas-cms:hover .radar-corner-lbl b{color:#A855F7}
+.radar-canvas-cms:hover circle{fill:#A855F7 !important}
 
 /* PRINT */
 @media print{
@@ -835,7 +839,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
         <div class="sk-group">
           <div class="sk-group-title">CMS &amp; E-Commerce</div>
           <div class="radar-wrap">
-            <div class="radar-canvas">
+            <div class="radar-canvas radar-canvas-cms">
               <svg viewBox="0 0 200 200" class="radar-svg">
                 <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
                 <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
@@ -843,10 +847,10 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
                 <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
                 <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
                 <polygon class="radar-fill radar-fill-cms" id="radarFillCMS" points="100,100 100,100 100,100 100,100"/>
-                <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
-                <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
-                <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
-                <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="100" cy="28" r="3" fill="var(--gold)" opacity=".7"/>
+                <circle cx="172" cy="100" r="3" fill="var(--gold)" opacity=".7"/>
+                <circle cx="100" cy="172" r="3" fill="var(--gold)" opacity=".7"/>
+                <circle cx="28" cy="100" r="3" fill="var(--gold)" opacity=".7"/>
               </svg>
               <div class="radar-corner-lbl rcl-top"><b>WordPress</b>90%</div>
               <div class="radar-corner-lbl rcl-right"><b>WooCommerce</b>85%</div>
@@ -1271,16 +1275,50 @@ gsap.utils.toArray('.sec-label').forEach(el=>{
     scrollTrigger:{trigger:el,start:'top 90%'}});
 });
 
-ScrollTrigger.batch('.edu-card',{start:'top 88%',once:true,
-  onEnter:b=>gsap.from(b,{y:40,autoAlpha:0,stagger:.1,duration:.7,ease:'power3.out'})});
+/* edu-cards: alternating sides */
+gsap.utils.toArray('.edu-card').forEach((el,i)=>{
+  gsap.from(el,{x:i%2===0?-70:70,autoAlpha:0,duration:.75,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
 ScrollTrigger.batch('.diplo-big',{start:'top 88%',once:true,
   onEnter:b=>gsap.from(b,{y:30,autoAlpha:0,stagger:.12,duration:.65,ease:'power2.out'})});
 
-ScrollTrigger.batch('.sk-group',{start:'top 85%',once:true,
-  onEnter:b=>gsap.from(b,{y:60,autoAlpha:0,stagger:.12,duration:.9,ease:'power3.out'})});
+/* sk-groups: radar pairs from sides, others from y */
+document.querySelectorAll('.sk-group').forEach(el=>{
+  const inPair=el.closest('.radar-pair');
+  const idx=inPair?Array.from(inPair.querySelectorAll('.sk-group')).indexOf(el):0;
+  gsap.from(el,{
+    x:inPair?(idx===0?-80:80):0,
+    y:inPair?0:60,
+    autoAlpha:0,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 85%',once:true}});
+});
 
-ScrollTrigger.batch('.curso-card',{start:'top 90%',once:true,
-  onEnter:b=>gsap.from(b,{y:50,autoAlpha:0,scale:.96,stagger:.09,duration:.8,ease:'power3.out'})});
+/* exp-cards from sides */
+gsap.utils.toArray('.exp-card').forEach((el,i)=>{
+  gsap.from(el,{x:i%2===0?-80:80,autoAlpha:0,duration:.85,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 87%',once:true}});
+});
+/* upskilling cards from sides */
+gsap.utils.toArray('.activa-card').forEach((el,i)=>{
+  gsap.from(el,{x:i%2===0?-70:70,autoAlpha:0,duration:.8,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
+/* cursos rows alternating */
+gsap.utils.toArray('.cursos-row').forEach((el,i)=>{
+  gsap.from(el,{x:i%2===0?-65:65,autoAlpha:0,duration:.75,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+});
+/* ring items subtle x */
+gsap.utils.toArray('.ring-item').forEach((el,i)=>{
+  gsap.from(el,{x:i%2===0?-40:40,autoAlpha:0,duration:.7,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+});
+/* vbar items from sides */
+gsap.utils.toArray('.vbar-item').forEach((el,i,arr)=>{
+  gsap.from(el,{x:i<arr.length/2?-55:55,autoAlpha:0,duration:.7,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 85%',once:true}});
+});
 
 /* ── 3D TILT on cards ── */
 document.querySelectorAll('.curso-card').forEach(card=>{
