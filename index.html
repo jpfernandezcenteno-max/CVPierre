@@ -72,10 +72,12 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 /* HERO */
 #hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 52px 80px;overflow:hidden}
 #hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,var(--rule) 1px,transparent 0);background-size:48px 48px;opacity:.4;pointer-events:none;z-index:0}
-.blob{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;will-change:transform}
-.b1{width:700px;height:700px;top:-280px;left:-220px;background:radial-gradient(circle,rgba(168,212,78,.1) 0%,transparent 70%)}
-.b2{width:600px;height:600px;bottom:-200px;right:-160px;background:radial-gradient(circle,rgba(67,116,224,.12) 0%,transparent 70%)}
-.b3{width:400px;height:400px;top:35%;right:20%;background:radial-gradient(circle,rgba(67,116,224,.07) 0%,transparent 70%)}
+.blob{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;will-change:transform}
+.b1{width:820px;height:820px;top:-320px;left:-260px;background:radial-gradient(circle,rgba(67,116,224,.22) 0%,transparent 70%)}
+.b2{width:700px;height:700px;bottom:-240px;right:-180px;background:radial-gradient(circle,rgba(168,212,78,.18) 0%,transparent 70%)}
+.b3{width:500px;height:500px;top:30%;right:15%;background:radial-gradient(circle,rgba(67,116,224,.13) 0%,transparent 70%)}
+#hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:300px 300px;opacity:.06;mix-blend-mode:overlay;animation:grain .9s steps(1) infinite}
+@keyframes grain{0%{background-position:0 0}20%{background-position:-55px 35px}40%{background-position:75px -45px}60%{background-position:-35px -65px}80%{background-position:65px 45px}100%{background-position:0 0}}
 
 .hero-inner{position:relative;z-index:1;width:100%;max-width:1100px}
 .hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:56px;gap:20px;flex-wrap:wrap}
@@ -249,7 +251,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .activa-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
 .activa-num{font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;color:var(--teal);letter-spacing:.22em}
 .activa-badge{font-family:'Syne',sans-serif;font-size:.56rem;font-weight:700;color:var(--teal);border:1px solid rgba(168,212,78,.45);border-radius:3px;padding:2px 8px;letter-spacing:.15em}
-.activa-plat{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;color:var(--teal);margin-bottom:4px;line-height:1.1}
+.activa-plat{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;color:var(--ink);margin-bottom:4px;line-height:1.1}
 .activa-instructor{font-size:.72rem;color:var(--muted);margin-bottom:22px}
 .activa-courses{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .activa-courses li{font-size:.85rem;color:var(--mid);padding-left:16px;position:relative;line-height:1.4}
@@ -999,15 +1001,11 @@ ScrollTrigger.create({start:'80px top',onEnter:()=>nav.classList.add('on'),onLea
 });
 function setAct(id){document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('act',a.dataset.sec===id))}
 
-/* ── MOUSE PARALLAX BLOBS ── */
+/* ── BLOB AUTONOMOUS DRIFT ── */
 const b1=document.getElementById('b1'),b2=document.getElementById('b2'),b3=document.getElementById('b3');
-const bx1=gsap.quickTo(b1,'x',{duration:2,ease:'power3.out'}),by1=gsap.quickTo(b1,'y',{duration:2,ease:'power3.out'});
-const bx2=gsap.quickTo(b2,'x',{duration:2.8,ease:'power3.out'}),by2=gsap.quickTo(b2,'y',{duration:2.8,ease:'power3.out'});
-const bx3=gsap.quickTo(b3,'x',{duration:1.8,ease:'power3.out'}),by3=gsap.quickTo(b3,'y',{duration:1.8,ease:'power3.out'});
-document.getElementById('hero').addEventListener('mousemove',e=>{
-  const dx=(e.clientX/window.innerWidth-.5)*2, dy=(e.clientY/window.innerHeight-.5)*2;
-  bx1(dx*-45);by1(dy*-45);bx2(dx*60);by2(dy*60);bx3(dx*30);by3(dy*30);
-});
+gsap.to(b1,{x:80,y:60,duration:18,ease:'sine.inOut',yoyo:true,repeat:-1});
+gsap.to(b2,{x:-90,y:-65,duration:22,ease:'sine.inOut',yoyo:true,repeat:-1,delay:5});
+gsap.to(b3,{x:65,y:-80,duration:15,ease:'sine.inOut',yoyo:true,repeat:-1,delay:10});
 
 /* ── MAGNETIC ── */
 document.querySelectorAll('.nav-toggle,.nav-logo,.hero-cue').forEach(el=>{
