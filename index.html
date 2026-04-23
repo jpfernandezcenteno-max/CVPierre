@@ -230,10 +230,11 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .cms-ring-center span{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--ink);transition:color .4s}
 
 /* CURSOS */
-.cursos-list{display:flex;flex-direction:column;border-top:1px solid var(--border)}
-.cursos-row{display:grid;grid-template-columns:200px 1fr;gap:52px;padding:36px 0;border-bottom:1px solid var(--border);align-items:start;transition:background .3s}
-.cursos-row:hover{background:rgba(61,214,200,.02)}
+.cursos-list{display:flex;flex-direction:column;border-top:1px solid var(--border);margin:0 -40px}
+.cursos-row{display:grid;grid-template-columns:200px 1fr;gap:52px;padding:36px 40px;border-bottom:1px solid var(--border);align-items:start;transition:background .3s,padding .3s ease}
+.cursos-row:hover{background:rgba(61,214,200,.03);padding:54px 40px}
 @media(max-width:700px){.cursos-row{grid-template-columns:1fr;gap:14px}}
+@media(max-width:700px){.cursos-list{margin:0 -16px}.cursos-row{padding:28px 16px}.cursos-row:hover{padding:40px 16px}}
 .cursos-row-num{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.22em;margin-bottom:8px}
 .cursos-row-plat{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--ink);margin-bottom:5px;transition:color .3s}
 .cursos-row:hover .cursos-row-plat{color:var(--teal)}
