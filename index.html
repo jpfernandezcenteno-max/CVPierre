@@ -32,8 +32,7 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 
 /* CURSOR */
 .cur-dot{display:none}
-.cur-ring{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid rgba(168,212,78,.75);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0;will-change:transform;box-shadow:0 0 8px rgba(168,212,78,.2),0 0 20px rgba(168,212,78,.08);transition:box-shadow .3s ease}
-.cur-ring.hov{box-shadow:0 0 14px rgba(168,212,78,.55),0 0 32px rgba(168,212,78,.22)}
+.cur-ring{position:fixed;top:0;left:0;width:36px;height:36px;border:2px solid rgba(168,212,78,.8);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;will-change:transform;box-shadow:0 0 10px rgba(168,212,78,.35),0 0 24px rgba(168,212,78,.12);transition:box-shadow .25s ease}
 @media(hover:none),(pointer:coarse){.cur-dot,.cur-ring{display:none}}
 
 /* SCROLL BAR */
@@ -973,16 +972,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ── CURSOR ── */
 const ring = document.getElementById('cRing');
-if(window.matchMedia('(hover:hover)and(pointer:fine)').matches){
-  const xR=gsap.quickTo(ring,'x',{duration:.42,ease:'power3'}), yR=gsap.quickTo(ring,'y',{duration:.42,ease:'power3'});
-  let cursorReady=false;
-  window.addEventListener('mousemove',e=>{
-    xR(e.clientX);yR(e.clientY);
-    if(!cursorReady){gsap.to(ring,{opacity:.6,duration:.4});cursorReady=true;}
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  gsap.set(ring,{xPercent:-50,yPercent:-50});
+  const xTo=gsap.quickTo(ring,'x',{duration:.38,ease:'power3'}),
+        yTo=gsap.quickTo(ring,'y',{duration:.38,ease:'power3'});
+  let shown=false;
+  document.addEventListener('mousemove',e=>{
+    xTo(e.clientX); yTo(e.clientY);
+    if(!shown){gsap.to(ring,{opacity:.7,duration:.3});shown=true;}
   });
-  document.querySelectorAll('a,button,.exp-card,.activa-card,.cursos-row,.ring-item,.vbar-item,.edu-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{gsap.to(ring,{scale:1.75,opacity:.8,duration:.3,ease:'power2.out'});ring.classList.add('hov')});
-    el.addEventListener('mouseleave',()=>{gsap.to(ring,{scale:1,opacity:.6,duration:.4,ease:'power3.out'});ring.classList.remove('hov')});
+  document.querySelectorAll('a,button,.exp-card,.activa-card,.cursos-row,.ring-item,.vbar-item,.edu-card,.radar-canvas').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      gsap.to(ring,{scale:1.8,opacity:1,duration:.25,ease:'power2.out'});
+      ring.style.boxShadow='0 0 18px rgba(168,212,78,.65),0 0 40px rgba(168,212,78,.28)';
+    });
+    el.addEventListener('mouseleave',()=>{
+      gsap.to(ring,{scale:1,opacity:.7,duration:.35,ease:'power3.out'});
+      ring.style.boxShadow='0 0 10px rgba(168,212,78,.35),0 0 24px rgba(168,212,78,.12)';
+    });
   });
 }
 
