@@ -202,6 +202,13 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .vbar-item:hover .vbar-name{color:var(--ink)}
 
 /* Radar chart */
+.radar-pair{display:flex;gap:0;justify-content:center;align-items:flex-start;width:100%;max-width:1100px}
+.radar-pair>.sk-group{flex:1;min-width:0;width:auto}
+.radar-pair>.sk-group+.sk-group{border-left:1px solid var(--border);padding-left:40px}
+@media(max-width:760px){
+  .radar-pair{flex-direction:column;gap:56px}
+  .radar-pair>.sk-group+.sk-group{border-left:none;padding-left:0;border-top:1px solid var(--border);padding-top:56px}
+}
 .radar-wrap{display:flex;flex-direction:column;align-items:center}
 .radar-canvas{position:relative;width:320px;height:320px;overflow:visible}
 .radar-canvas .radar-svg{position:absolute;inset:0;width:100%;height:100%}
@@ -671,58 +678,57 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
         </div>
       </div>
 
-      <!-- Analítica → Radar chart -->
-      <div class="sk-group">
-        <div class="sk-group-title">Analítica y Pauta Digital</div>
-        <div class="radar-wrap">
-          <div class="radar-canvas">
-            <svg viewBox="0 0 200 200" class="radar-svg">
-              <!-- Grid lines -->
-              <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
-              <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
-              <polygon class="radar-grid-poly" points="100,62 138,100 100,138 62,100" opacity=".4"/>
-              <!-- Axes -->
-              <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
-              <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
-              <!-- Data polygon -->
-              <polygon class="radar-fill" id="radarFill" points="100,100 100,100 100,100 100,100"/>
-              <!-- Axis dots -->
-              <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
-            </svg>
-            <div class="radar-corner-lbl rcl-top"><b>Google Ads</b>90%</div>
-            <div class="radar-corner-lbl rcl-right"><b>Meta Ads</b>90%</div>
-            <div class="radar-corner-lbl rcl-bottom"><b>Google Analytics</b>70%</div>
-            <div class="radar-corner-lbl rcl-left"><b>Google Tag Manager</b>70%</div>
-          </div>
-        </div>
-      </div>
+      <!-- Analítica + CMS → side by side -->
+      <div class="radar-pair">
 
-      <!-- CMS & E-Commerce → Radar chart -->
-      <div class="sk-group">
-        <div class="sk-group-title">CMS &amp; E-Commerce</div>
-        <div class="radar-wrap">
-          <div class="radar-canvas">
-            <svg viewBox="0 0 200 200" class="radar-svg">
-              <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
-              <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
-              <polygon class="radar-grid-poly" points="100,62 138,100 100,138 62,100" opacity=".4"/>
-              <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
-              <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
-              <polygon class="radar-fill" id="radarFillCMS" points="100,100 100,100 100,100 100,100"/>
-              <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
-              <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
-            </svg>
-            <div class="radar-corner-lbl rcl-top"><b>WordPress</b>90%</div>
-            <div class="radar-corner-lbl rcl-right"><b>WooCommerce</b>85%</div>
-            <div class="radar-corner-lbl rcl-bottom"><b>Amazon Seller Central</b>50%</div>
-            <div class="radar-corner-lbl rcl-left"><b>Shopify</b>80%</div>
+        <div class="sk-group">
+          <div class="sk-group-title">Analítica y Pauta Digital</div>
+          <div class="radar-wrap">
+            <div class="radar-canvas">
+              <svg viewBox="0 0 200 200" class="radar-svg">
+                <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
+                <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
+                <polygon class="radar-grid-poly" points="100,62 138,100 100,138 62,100" opacity=".4"/>
+                <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
+                <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
+                <polygon class="radar-fill" id="radarFill" points="100,100 100,100 100,100 100,100"/>
+                <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+              </svg>
+              <div class="radar-corner-lbl rcl-top"><b>Google Ads</b>90%</div>
+              <div class="radar-corner-lbl rcl-right"><b>Meta Ads</b>90%</div>
+              <div class="radar-corner-lbl rcl-bottom"><b>Google Analytics</b>70%</div>
+              <div class="radar-corner-lbl rcl-left"><b>Google Tag Manager</b>70%</div>
+            </div>
           </div>
         </div>
+
+        <div class="sk-group">
+          <div class="sk-group-title">CMS &amp; E-Commerce</div>
+          <div class="radar-wrap">
+            <div class="radar-canvas">
+              <svg viewBox="0 0 200 200" class="radar-svg">
+                <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
+                <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
+                <polygon class="radar-grid-poly" points="100,62 138,100 100,138 62,100" opacity=".4"/>
+                <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
+                <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
+                <polygon class="radar-fill" id="radarFillCMS" points="100,100 100,100 100,100 100,100"/>
+                <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
+                <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+              </svg>
+              <div class="radar-corner-lbl rcl-top"><b>WordPress</b>90%</div>
+              <div class="radar-corner-lbl rcl-right"><b>WooCommerce</b>85%</div>
+              <div class="radar-corner-lbl rcl-bottom"><b>Amazon Seller Central</b>50%</div>
+              <div class="radar-corner-lbl rcl-left"><b>Shopify</b>80%</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
