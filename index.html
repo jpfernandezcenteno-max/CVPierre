@@ -321,6 +321,28 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
   .cms-brand-icon{width:28px;height:28px}
 }
 
+/* ── SKILL DIAGRAM HOVER INTERACTIONS ── */
+
+/* Rings: scale the visual, glow the arc, teal the percentage */
+.ring-vis{transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
+.ring-fg{transition:stroke .3s,filter .32s}
+.ring-item:hover .ring-vis{transform:scale(1.09)}
+.ring-item:hover .ring-fg{filter:drop-shadow(0 0 8px var(--teal))}
+.ring-item:hover .ring-center{color:var(--teal)}
+
+/* Vertical bars: glow the fill, highlight percentage */
+.vbar-fill{transition:background .3s,height 1.3s power2,filter .32s}
+.vbar-item:hover .vbar-fill{filter:brightness(1.4) drop-shadow(0 0 10px rgba(61,214,200,.6))}
+.vbar-pct{transition:color .3s}
+.vbar-item:hover .vbar-pct{color:var(--teal)}
+
+/* Radar: brighten fill + axis lines, teal all corner labels on hover */
+.radar-fill{transition:fill-opacity .38s,stroke-width .38s}
+.radar-axis{transition:stroke .38s,opacity .38s}
+.radar-canvas:hover .radar-fill{fill-opacity:.32;stroke-width:3}
+.radar-canvas:hover .radar-axis{stroke:var(--teal);opacity:.55}
+.radar-canvas:hover .radar-corner-lbl b{color:var(--teal)}
+
 /* PRINT */
 @media print{
   body{background:#fff;color:#111}
