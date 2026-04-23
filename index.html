@@ -239,10 +239,23 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .cursos-row-plat{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--ink);margin-bottom:5px;transition:color .3s}
 .cursos-row:hover .cursos-row-plat{color:var(--teal)}
 .cursos-row-count{font-size:.72rem;color:var(--muted)}
-.cursos-row.featured .cursos-row-num{color:var(--teal)}
-.cursos-row.featured .cursos-row-plat{font-size:1.55rem;color:var(--teal)}
-.cursos-row.featured .cursos-row-count{color:var(--mid)}
-.cursos-row-badge{display:inline-block;font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 7px;margin-top:8px;opacity:.75}
+/* ── FORMACIÓN ACTIVA ── */
+.activa-desc{max-width:680px;margin:0 auto 64px;text-align:center;font-size:.95rem;color:var(--mid);line-height:1.75}
+.activa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:920px;margin:0 auto}
+@media(max-width:700px){.activa-grid{grid-template-columns:1fr}}
+.activa-card{border:1px solid var(--border);border-radius:6px;padding:36px 32px;position:relative;transition:border-color .35s,background .35s,transform .35s cubic-bezier(.34,1.56,.64,1)}
+.activa-card:hover{border-color:var(--teal);background:rgba(61,214,200,.03);transform:translateY(-4px)}
+.activa-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.activa-num{font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;color:var(--teal);letter-spacing:.22em}
+.activa-badge{font-family:'Syne',sans-serif;font-size:.56rem;font-weight:700;color:var(--teal);border:1px solid rgba(61,214,200,.45);border-radius:3px;padding:2px 8px;letter-spacing:.15em}
+.activa-plat{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;color:var(--teal);margin-bottom:4px;line-height:1.1}
+.activa-instructor{font-size:.72rem;color:var(--muted);margin-bottom:22px}
+.activa-courses{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.activa-courses li{font-size:.85rem;color:var(--mid);padding-left:16px;position:relative;line-height:1.4}
+.activa-courses li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:1px;background:var(--teal)}
+.activa-live{display:flex;align-items:center;gap:8px;font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);opacity:.7}
+.activa-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;animation:livepulse 2s ease-in-out infinite}
+@keyframes livepulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
 .cursos-row-right{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
 .ctag{font-size:.78rem;color:var(--mid);background:transparent;border:1px solid var(--border);border-radius:4px;padding:6px 14px;font-weight:300;line-height:1.5;transition:color .25s,border-color .25s}
 .ctag:hover{border-color:var(--teal);color:var(--ink)}
@@ -378,6 +391,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
     <li><a href="#exp"     data-sec="exp">Experiencia</a></li>
     <li><a href="#skills"  data-sec="skills">Skills</a></li>
     <li><a href="#cursos"  data-sec="cursos">Cursos</a></li>
+    <li><a href="#activa"  data-sec="activa">Upskilling</a></li>
   </ul>
   <button class="nav-toggle" id="themeBtn" aria-label="Cambiar tema">
     <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -873,53 +887,68 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
         </div>
       </div>
 
-      <div class="cursos-row featured">
-        <div class="cursos-row-left">
-          <div class="cursos-row-num">06</div>
-          <div class="cursos-row-plat">Clickomi</div>
-          <div class="cursos-row-count">2 cursos · Alan Valdez · Skool</div>
-          <div class="cursos-row-badge">2025</div>
+    </div>
+  </div>
+</section>
+
+<section id="activa" class="sec">
+  <div class="wrap">
+    <div class="sec-label">06 — Formación Activa</div>
+    <h2 class="sec-title">Upskilling</h2>
+    <p class="activa-desc">Cursos especializados en analítica de marketing, e-commerce y marketing digital, seleccionados por instructores referentes del sector. Contenido en constante actualización para mantenerse alineado con los cambios del ecosistema digital.</p>
+    <div class="activa-grid">
+
+      <div class="activa-card">
+        <div class="activa-card-top">
+          <span class="activa-num">01</span>
+          <span class="activa-badge">2025</span>
         </div>
-        <div class="cursos-row-right">
-          <span class="ctag">Google Ads</span>
-          <span class="ctag">Google Ads Ecommerce</span>
-        </div>
+        <div class="activa-plat">Clickomi</div>
+        <div class="activa-instructor">Alan Valdez · Skool</div>
+        <ul class="activa-courses">
+          <li>Google Ads</li>
+          <li>Google Ads Ecommerce</li>
+        </ul>
+        <div class="activa-live"><span class="activa-dot"></span>En constante actualización</div>
       </div>
 
-      <div class="cursos-row featured">
-        <div class="cursos-row-left">
-          <div class="cursos-row-num">07</div>
-          <div class="cursos-row-plat">Felipe Vergara</div>
-          <div class="cursos-row-count">1 curso</div>
-          <div class="cursos-row-badge">2025</div>
+      <div class="activa-card">
+        <div class="activa-card-top">
+          <span class="activa-num">02</span>
+          <span class="activa-badge">2025</span>
         </div>
-        <div class="cursos-row-right">
-          <span class="ctag">Meta Ads desde 0</span>
-        </div>
+        <div class="activa-plat">Felipe Vergara</div>
+        <div class="activa-instructor">Plataforma propia</div>
+        <ul class="activa-courses">
+          <li>Meta Ads desde 0</li>
+        </ul>
+        <div class="activa-live"><span class="activa-dot"></span>En constante actualización</div>
       </div>
 
-      <div class="cursos-row featured">
-        <div class="cursos-row-left">
-          <div class="cursos-row-num">08</div>
-          <div class="cursos-row-plat">Tutopress</div>
-          <div class="cursos-row-count">1 curso</div>
-          <div class="cursos-row-badge">2026</div>
+      <div class="activa-card">
+        <div class="activa-card-top">
+          <span class="activa-num">03</span>
+          <span class="activa-badge">2026</span>
         </div>
-        <div class="cursos-row-right">
-          <span class="ctag">Analítica Digital desde 0</span>
-        </div>
+        <div class="activa-plat">Tutopress</div>
+        <div class="activa-instructor">Plataforma propia</div>
+        <ul class="activa-courses">
+          <li>Analítica Digital desde 0</li>
+        </ul>
+        <div class="activa-live"><span class="activa-dot"></span>En constante actualización</div>
       </div>
 
-      <div class="cursos-row featured">
-        <div class="cursos-row-left">
-          <div class="cursos-row-num">09</div>
-          <div class="cursos-row-plat">Analytics Way</div>
-          <div class="cursos-row-count">1 curso</div>
-          <div class="cursos-row-badge">2025</div>
+      <div class="activa-card">
+        <div class="activa-card-top">
+          <span class="activa-num">04</span>
+          <span class="activa-badge">2025</span>
         </div>
-        <div class="cursos-row-right">
-          <span class="ctag">GA4 y GTM para Proyectos de Analítica Digital</span>
-        </div>
+        <div class="activa-plat">Analytics Way</div>
+        <div class="activa-instructor">Plataforma propia</div>
+        <ul class="activa-courses">
+          <li>GA4 y GTM para Proyectos de Analítica Digital</li>
+        </ul>
+        <div class="activa-live"><span class="activa-dot"></span>En constante actualización</div>
       </div>
 
     </div>
