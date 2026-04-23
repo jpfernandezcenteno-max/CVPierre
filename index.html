@@ -106,7 +106,17 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 .hero-cue-text{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .hero-cue-arrow{width:1px;height:52px;background:linear-gradient(to bottom,var(--teal),transparent);animation:drop 2s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
-@media(max-width:700px){#hero{padding:100px 24px 80px}.hero-top{flex-direction:column;text-align:left;align-items:flex-start}.hero-contact{text-align:left}.hero-stats{justify-content:flex-start;gap:20px 44px}.htext{font-size:clamp(1.9rem,10.5vw,64px)}.hero-name{width:100%;margin-left:0;padding:0 24px}}
+@media(max-width:700px){
+  #hero{padding:100px 24px 80px}
+  .hero-inner{text-align:center}
+  .hero-top{flex-direction:column;align-items:center;text-align:center}
+  .hero-tag{justify-content:center}
+  .hero-contact{text-align:center;word-break:break-word;overflow-wrap:anywhere;font-size:.72rem}
+  .hero-stats{justify-content:center;gap:20px 36px}
+  .hero-role{justify-content:center}
+  .htext{font-size:clamp(1.9rem,10.5vw,64px)}
+  .hero-name{width:100%;margin-left:0;padding:0 16px}
+}
 
 /* HERO FLASHLIGHT */
 #hero-light{position:absolute;inset:0;z-index:2;pointer-events:none;--lx:50%;--ly:50%;background:radial-gradient(circle at var(--lx) var(--ly),transparent 0,transparent 150px,var(--hero-dim) 340px);opacity:0;transition:opacity .5s ease}
@@ -303,16 +313,48 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 
 /* ── RESPONSIVE UX IMPROVEMENTS ── */
 
-/* Smaller sec-title on mobile — prevents awkward wrapping at minimum clamp */
+/* ── MOBILE (≤700px) ── */
 @media(max-width:700px){
+  /* Titles */
   .sec-title{font-size:clamp(1.3rem,5.5vw,2rem);margin-bottom:40px}
-  /* Experience: fuse bar and scroll hint are irrelevant when cards stack */
+  .sec-label{font-size:.62rem;letter-spacing:.18em}
+
+  /* Experience */
   .exp-bar,.exp-hint{display:none}
-  #exp{padding-bottom:56px}
-  /* Vertical bars: prevent the 5-bar row from overflowing narrow screens */
+  #exp{padding-bottom:56px;height:auto;overflow:visible}
+  .exp-viewport{overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch}
+  .exp-track{padding:0 24px;gap:0}
+  .exp-card{width:clamp(260px,80vw,340px);padding:28px 20px 56px 0;word-break:break-word;overflow-wrap:break-word}
+  .exp-c-role{font-size:clamp(1rem,4.5vw,1.4rem)}
+  .exp-c-badge{word-break:break-word;white-space:normal}
+
+  /* Vertical bars */
   .vbars-outer{gap:14px;height:200px;padding-bottom:44px}
   .vbar-item{width:clamp(42px,12vw,80px)}
   .vbar-name,.vbar-pct{font-size:.65rem}
+
+  /* Skills centering */
+  .skills-sections{align-items:center}
+  .sk-group{display:flex;flex-direction:column;align-items:center}
+  .rings-grid{justify-items:center}
+  .vbars-outer{justify-content:center}
+
+  /* Formación centering */
+  .edu-card{text-align:center;padding:28px 20px}
+  .diplo-big{text-align:center;padding:28px 20px}
+
+  /* Cursos */
+  .cursos-row-plat{font-size:1.05rem}
+  .cursos-row-right{justify-content:flex-start}
+  .ctag{font-size:.7rem;padding:5px 10px}
+
+  /* Upskilling */
+  .activa-desc{font-size:.88rem;padding:0 4px}
+  .activa-card{padding:28px 22px;text-align:left}
+  .activa-plat{font-size:1.3rem}
+
+  /* Footer */
+  .ft-name{font-size:1.1rem;word-break:break-word}
 }
 
 /* Tablet (700–900px): ensure vbars don't crowd */
@@ -323,10 +365,13 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 
 /* Radar: shrink canvas on narrow viewports; corner labels scale down */
 @media(max-width:640px){
-  .radar-canvas{width:200px;height:200px}
-  .radar-corner-lbl{font-size:.6rem;white-space:normal;max-width:72px}
-  .radar-corner-lbl b{font-size:.67rem}
-  .rcl-top,.rcl-bottom{max-width:120px;white-space:nowrap}
+  .radar-canvas{width:220px;height:220px}
+  .radar-wrap{align-items:center}
+  .radar-corner-lbl{font-size:.58rem;white-space:normal;max-width:68px}
+  .radar-corner-lbl b{font-size:.64rem}
+  .rcl-top,.rcl-bottom{max-width:110px;white-space:nowrap}
+  .rcl-right{transform:translate(10px,-50%)}
+  .rcl-left{transform:translate(calc(-100% - 10px),-50%)}
 }
 
 /* Edu-grid: remove orphan right-border in 2-column layout */
