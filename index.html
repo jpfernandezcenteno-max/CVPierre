@@ -31,8 +31,9 @@ body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);ove
 @media(hover:hover)and(pointer:fine){body{cursor:none}}
 
 /* CURSOR */
-.cur-dot{position:fixed;top:0;left:0;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);will-change:transform;opacity:0}
-.cur-ring{position:fixed;top:0;left:0;width:36px;height:36px;border:1.5px solid var(--teal);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0;will-change:transform}
+.cur-dot{display:none}
+.cur-ring{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid rgba(168,212,78,.75);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0;will-change:transform;box-shadow:0 0 8px rgba(168,212,78,.2),0 0 20px rgba(168,212,78,.08);transition:box-shadow .3s ease}
+.cur-ring.hov{box-shadow:0 0 14px rgba(168,212,78,.55),0 0 32px rgba(168,212,78,.22)}
 @media(hover:none),(pointer:coarse){.cur-dot,.cur-ring{display:none}}
 
 /* SCROLL BAR */
@@ -363,10 +364,10 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 .radar-canvas:hover .radar-fill{fill-opacity:.32;stroke-width:3}
 .radar-canvas:hover .radar-axis{stroke:var(--teal);opacity:.55}
 .radar-canvas:hover .radar-corner-lbl b{color:var(--teal)}
-.radar-canvas-cms:hover .radar-fill-cms{fill:#A855F7;stroke:#A855F7;fill-opacity:.28;stroke-width:3}
-.radar-canvas-cms:hover .radar-axis{stroke:#A855F7;opacity:.55}
-.radar-canvas-cms:hover .radar-corner-lbl b{color:#A855F7}
-.radar-canvas-cms:hover circle{fill:#A855F7 !important}
+.radar-canvas-cms:hover .radar-fill-cms{fill:var(--gold);stroke:var(--gold);fill-opacity:.28;stroke-width:3}
+.radar-canvas-cms:hover .radar-axis{stroke:var(--gold);opacity:.55}
+.radar-canvas-cms:hover .radar-corner-lbl b{color:var(--gold)}
+.radar-canvas-cms:hover circle{fill:var(--gold)}
 
 /* PRINT */
 @media print{
@@ -847,10 +848,10 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
                 <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
                 <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
                 <polygon class="radar-fill radar-fill-cms" id="radarFillCMS" points="100,100 100,100 100,100 100,100"/>
-                <circle cx="100" cy="28" r="3" fill="var(--gold)" opacity=".7"/>
-                <circle cx="172" cy="100" r="3" fill="var(--gold)" opacity=".7"/>
-                <circle cx="100" cy="172" r="3" fill="var(--gold)" opacity=".7"/>
-                <circle cx="28" cy="100" r="3" fill="var(--gold)" opacity=".7"/>
+                <circle cx="100" cy="28" r="3" fill="#4374E0" opacity=".7"/>
+                <circle cx="172" cy="100" r="3" fill="#4374E0" opacity=".7"/>
+                <circle cx="100" cy="172" r="3" fill="#4374E0" opacity=".7"/>
+                <circle cx="28" cy="100" r="3" fill="#4374E0" opacity=".7"/>
               </svg>
               <div class="radar-corner-lbl rcl-top"><b>WordPress</b>90%</div>
               <div class="radar-corner-lbl rcl-right"><b>WooCommerce</b>85%</div>
@@ -971,23 +972,17 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── CURSOR ── */
-const dot = document.getElementById('cDot');
 const ring = document.getElementById('cRing');
 if(window.matchMedia('(hover:hover)and(pointer:fine)').matches){
-  const xD=gsap.quickTo(dot,'x',{duration:0}), yD=gsap.quickTo(dot,'y',{duration:0});
-  const xR=gsap.quickTo(ring,'x',{duration:.45,ease:'power3'}), yR=gsap.quickTo(ring,'y',{duration:.45,ease:'power3'});
+  const xR=gsap.quickTo(ring,'x',{duration:.42,ease:'power3'}), yR=gsap.quickTo(ring,'y',{duration:.42,ease:'power3'});
   let cursorReady=false;
   window.addEventListener('mousemove',e=>{
-    xD(e.clientX);yD(e.clientY);xR(e.clientX);yR(e.clientY);
-    if(!cursorReady){
-      gsap.to(dot,{opacity:1,duration:.3});
-      gsap.to(ring,{opacity:.5,duration:.4});
-      cursorReady=true;
-    }
+    xR(e.clientX);yR(e.clientY);
+    if(!cursorReady){gsap.to(ring,{opacity:.6,duration:.4});cursorReady=true;}
   });
-  document.querySelectorAll('a,button,.exp-card,.cursos-row,.tag,.ring-item,.vbar-item').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{gsap.to(ring,{scale:1.8,opacity:.3,duration:.3,ease:'power2.out'});gsap.to(dot,{scale:.4,duration:.2})});
-    el.addEventListener('mouseleave',()=>{gsap.to(ring,{scale:1,opacity:.5,duration:.3,ease:'power2.out'});gsap.to(dot,{scale:1,duration:.2})});
+  document.querySelectorAll('a,button,.exp-card,.activa-card,.cursos-row,.ring-item,.vbar-item,.edu-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{gsap.to(ring,{scale:1.75,opacity:.8,duration:.3,ease:'power2.out'});ring.classList.add('hov')});
+    el.addEventListener('mouseleave',()=>{gsap.to(ring,{scale:1,opacity:.6,duration:.4,ease:'power3.out'});ring.classList.remove('hov')});
   });
 }
 
