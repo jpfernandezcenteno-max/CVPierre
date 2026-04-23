@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pierre Fernandez</title>
+<title>Pierre Fernandez Centeno</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -375,6 +375,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
     <div class="hero-name">
       <span class="hline"><span class="htext" id="hl1">Pierre</span></span>
       <span class="hline"><span class="htext ac" id="hl2">Fernandez</span></span>
+      <span class="hline"><span class="htext" id="hl3">Centeno</span></span>
     </div>
     <div class="hero-role" id="heroRole">
       <span class="hero-role-item">UX / UI Designer</span>
@@ -832,7 +833,7 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 </section>
 
 <footer>
-  <div class="ft-name">Pierre Fernandez</div>
+  <div class="ft-name">Pierre Fernandez Centeno</div>
   <div class="ft-copy">Arequipa, Perú · 2025</div>
 </footer>
 
@@ -896,7 +897,8 @@ gsap.timeline({defaults:{ease:'power4.out'}})
   .from('#heroTop',{y:-24,autoAlpha:0,duration:.7},.15)
   .from('#hl1',{y:'108%',duration:1.1},.3)
   .from('#hl2',{y:'108%',duration:1.1},.44)
-  .from('#heroRole',{y:22,autoAlpha:0,duration:.65},.9)
+  .from('#hl3',{y:'108%',duration:1.1},.58)
+  .from('#heroRole',{y:22,autoAlpha:0,duration:.65},1.0)
   .from('.hero-stat',{y:22,autoAlpha:0,stagger:.08,duration:.55},1.1)
   .from('.hero-cue',{autoAlpha:0,duration:.5},1.5);
 
