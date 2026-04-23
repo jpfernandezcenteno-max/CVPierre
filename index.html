@@ -28,7 +28,8 @@
 
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;transition:background .45s,color .45s}
-@media(hover:hover)and(pointer:fine){html,html *{cursor:none!important}}
+*{cursor:none!important}
+@media(hover:none),(pointer:coarse){*{cursor:auto!important}}
 
 /* CURSOR */
 .cur-dot{display:none}
@@ -1034,7 +1035,6 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
       });
     });
     el.addEventListener('mouseleave',()=>{
-      gsap.killTweensOf(ring);
       gsap.to(ring,{scale:1,opacity:.7,duration:.45,ease:'power2.out'});
       ring.style.boxShadow='0 0 10px rgba(168,212,78,.35),0 0 24px rgba(168,212,78,.12)';
     });
