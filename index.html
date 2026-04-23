@@ -700,61 +700,28 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
         </div>
       </div>
 
-      <!-- CMS & E-Commerce → Rings grid -->
+      <!-- CMS & E-Commerce → Radar chart -->
       <div class="sk-group">
         <div class="sk-group-title">CMS &amp; E-Commerce</div>
-        <div class="cms-grid">
-
-          <!-- WordPress 90% -->
-          <div class="ring-item">
-            <div class="ring-vis">
-              <svg viewBox="0 0 110 110"><circle class="ring-bg" cx="55" cy="55" r="44"/><circle class="ring-fg" cx="55" cy="55" r="44" data-pct="90"/></svg>
-              <div class="ring-center cms-ring-center">
-                <svg class="cms-brand-icon" width="34" height="34" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="17" cy="17" r="17" fill="#21759B"/>
-                  <circle cx="17" cy="17" r="12.5" fill="none" stroke="white" stroke-width="1.6"/>
-                  <text x="17" y="22.5" text-anchor="middle" font-size="14" font-weight="700" fill="white" font-family="Georgia,serif">W</text>
-                </svg>
-                <span>90%</span>
-              </div>
-            </div>
-            <div class="ring-name">WordPress</div>
+        <div class="radar-wrap">
+          <div class="radar-canvas">
+            <svg viewBox="0 0 200 200" class="radar-svg">
+              <polygon class="radar-grid-poly" points="100,25 175,100 100,175 25,100"/>
+              <polygon class="radar-grid-poly" points="100,44 156,100 100,156 44,100" opacity=".6"/>
+              <polygon class="radar-grid-poly" points="100,62 138,100 100,138 62,100" opacity=".4"/>
+              <line class="radar-axis" x1="100" y1="25" x2="100" y2="175"/>
+              <line class="radar-axis" x1="25" y1="100" x2="175" y2="100"/>
+              <polygon class="radar-fill" id="radarFillCMS" points="100,100 100,100 100,100 100,100"/>
+              <circle cx="100" cy="28" r="3" fill="var(--teal)" opacity=".7"/>
+              <circle cx="172" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+              <circle cx="100" cy="172" r="3" fill="var(--teal)" opacity=".7"/>
+              <circle cx="28" cy="100" r="3" fill="var(--teal)" opacity=".7"/>
+            </svg>
+            <div class="radar-corner-lbl rcl-top"><b>WordPress</b>90%</div>
+            <div class="radar-corner-lbl rcl-right"><b>WooCommerce</b>85%</div>
+            <div class="radar-corner-lbl rcl-bottom"><b>Amazon Seller Central</b>50%</div>
+            <div class="radar-corner-lbl rcl-left"><b>Shopify</b>80%</div>
           </div>
-
-          <!-- Shopify 80% -->
-          <div class="ring-item">
-            <div class="ring-vis">
-              <svg viewBox="0 0 110 110"><circle class="ring-bg" cx="55" cy="55" r="44"/><circle class="ring-fg" cx="55" cy="55" r="44" data-pct="80"/></svg>
-              <div class="ring-center cms-ring-center">
-                <svg class="cms-brand-icon" width="34" height="34" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="34" height="34" rx="5" fill="#95BF47"/>
-                  <path d="M14 16 Q14 10 17 10 Q20 10 20 16" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-                  <rect x="9" y="16" width="16" height="13" rx="2.5" fill="white"/>
-                  <text x="17" y="26.5" text-anchor="middle" font-size="10" font-weight="800" fill="#95BF47" font-family="Arial,sans-serif">S</text>
-                </svg>
-                <span>80%</span>
-              </div>
-            </div>
-            <div class="ring-name">Shopify</div>
-          </div>
-
-          <!-- Amazon Seller Central 50% -->
-          <div class="ring-item">
-            <div class="ring-vis">
-              <svg viewBox="0 0 110 110"><circle class="ring-bg" cx="55" cy="55" r="44"/><circle class="ring-fg" cx="55" cy="55" r="44" data-pct="50"/></svg>
-              <div class="ring-center cms-ring-center">
-                <svg class="cms-brand-icon" width="34" height="34" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="17" cy="17" r="17" fill="#FF9900"/>
-                  <text x="17" y="21" text-anchor="middle" font-size="16" font-weight="700" fill="white" font-family="Arial,sans-serif">a</text>
-                  <path d="M10 26 Q17 30 24 26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M22.5 24.5 L24 26 L22.5 27.5" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>50%</span>
-              </div>
-            </div>
-            <div class="ring-name">Amazon Seller Central</div>
-          </div>
-
         </div>
       </div>
 
@@ -1045,6 +1012,32 @@ gsap.utils.toArray('.vbar-fill').forEach(fill=>{
     }).join(' ');
   }
 
+  const obj={p:0};
+  gsap.to(obj,{
+    p:1, duration:1.6, ease:'power2.out',
+    onUpdate(){ polygon.setAttribute('points',pts(obj.p)) },
+    scrollTrigger:{trigger:polygon.closest('.sk-group'),start:'top 80%'}
+  });
+})();
+
+/* ── RADAR CHART — CMS & E-Commerce ── */
+(function(){
+  const polygon=document.getElementById('radarFillCMS');
+  if(!polygon) return;
+  const axes=[
+    {angle:-90, pct:90},  // top    WordPress
+    {angle:0,   pct:85},  // right  WooCommerce
+    {angle:90,  pct:50},  // bottom Amazon
+    {angle:180, pct:80},  // left   Shopify
+  ];
+  const maxR=72, cx=100, cy=100;
+  function pts(p){
+    return axes.map(a=>{
+      const r=maxR*(a.pct/100)*p;
+      const rad=a.angle*Math.PI/180;
+      return (cx+r*Math.cos(rad)).toFixed(2)+','+(cy+r*Math.sin(rad)).toFixed(2);
+    }).join(' ');
+  }
   const obj={p:0};
   gsap.to(obj,{
     p:1, duration:1.6, ease:'power2.out',
