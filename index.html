@@ -324,10 +324,10 @@ footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;justify
 /* ── SKILL DIAGRAM HOVER INTERACTIONS ── */
 
 /* Rings: scale the visual, glow the arc, teal the percentage */
-.ring-vis{transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
-.ring-fg{transition:stroke .3s,filter .32s}
-.ring-item:hover .ring-vis{transform:scale(1.09)}
-.ring-item:hover .ring-fg{filter:drop-shadow(0 0 8px var(--teal))}
+.ring-vis{transition:transform .32s cubic-bezier(.34,1.56,.64,1),filter .32s;overflow:visible}
+.ring-vis svg{overflow:visible;display:block}
+.ring-fg{transition:stroke .3s}
+.ring-item:hover .ring-vis{transform:scale(1.09);filter:drop-shadow(0 0 4px var(--teal)) drop-shadow(0 0 16px rgba(61,214,200,.5)) drop-shadow(0 0 32px rgba(61,214,200,.22))}
 .ring-item:hover .ring-center{color:var(--teal)}
 
 /* Vertical bars: glow the fill, highlight percentage */
