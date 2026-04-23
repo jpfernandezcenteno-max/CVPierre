@@ -28,7 +28,7 @@
 
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;transition:background .45s,color .45s}
-@media(hover:hover)and(pointer:fine){body,body *{cursor:none!important}}
+@media(hover:hover)and(pointer:fine){html,html *{cursor:none!important}}
 
 /* CURSOR */
 .cur-dot{display:none}
@@ -1028,11 +1028,14 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
   });
   document.querySelectorAll('a,button,.exp-card,.activa-card,.cursos-row,.ring-item,.vbar-item,.edu-card,.radar-canvas').forEach(el=>{
     el.addEventListener('mouseenter',()=>{
-      gsap.to(ring,{scale:1.8,opacity:1,duration:.25,ease:'power2.out'});
-      ring.style.boxShadow='0 0 18px rgba(168,212,78,.65),0 0 40px rgba(168,212,78,.28)';
+      ring.style.boxShadow='0 0 18px rgba(168,212,78,.6),0 0 38px rgba(168,212,78,.25)';
+      gsap.to(ring,{scale:1.75,opacity:1,duration:.14,ease:'power2.out',
+        onComplete:()=>gsap.to(ring,{scale:1,opacity:.7,duration:.55,ease:'power3.out'})
+      });
     });
     el.addEventListener('mouseleave',()=>{
-      gsap.to(ring,{scale:1,opacity:.7,duration:.35,ease:'power3.out'});
+      gsap.killTweensOf(ring);
+      gsap.to(ring,{scale:1,opacity:.7,duration:.45,ease:'power2.out'});
       ring.style.boxShadow='0 0 10px rgba(168,212,78,.35),0 0 24px rgba(168,212,78,.12)';
     });
   });
